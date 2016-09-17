@@ -30,7 +30,7 @@
 ;;; Code:
 
 (defconst ziyuan-packages
-  '(fcitx
+  '(;;fcitx
     ;; youdao-dictionary
     company
     org-ref
@@ -62,10 +62,16 @@ Each entry is either:
 ;;; packages.el ends here
 
 
-(defun ziyuan/init-fcitx()
-  (use-package fcitx
-    :init))
+;; (defun ziyuan/init-fcitx()
+;;   (use-package fcitx
+;;   :init
+;;   (setq fcitx-active-evil-states '(insert emacs hybrid)) ; if you use hybrid mode
+;;   (fcitx-aggressive-setup)
+;;   (fcitx-prefix-keys-add "M-m") ; M-m is common in Spacemacs
+;;   (setq fcitx-use-dbus t) ; uncomment if you're using Linux
+;;   ))
 
+;;一个在org中方便插入图片的package, see: https://github.com/abo-abo/org-download
 (defun ziyuan/init-org-download()
   (use-package org-download
     :init))
@@ -79,25 +85,28 @@ Each entry is either:
 ;;   )
 
 (defun ziyuan/init-org-ref()
-  (use-package org-ref)
-  :init)
+  (use-package org-ref
+  :init))
 
 (defun ziyuan/init-org-bullets()
-  (use-package org-bullets)
-  :init)
+  (use-package org-bullets
+  :init))
 
 (defun ziyuan/init-htmlize()
-  (use-package htmlize)
-  :init)
+  (use-package htmlize
+  :init))
 
 (defun ziyuan/init-anaconda-mode()
-  (use-package anaconda-mode)
-  :init)
+  (use-package anaconda-mode
+  :init))
 
-(defun ziyuan/post-init-fcitx()
-  (fcitx-aggressive-setup)
-  (setq fcitx-use-dbus t) 
-  )
+;; (defun ziyuan/post-init-fcitx()
+;;   ;; Make sure the following comes before `(fcitx-aggressive-setup)'
+;;   ;; (setq fcitx-active-evil-states '(insert emacs hybrid)) ; if you use hybrid mode
+;;   ;; (fcitx-aggressive-setup)
+;;   ;; (fcitx-prefix-keys-add "M-m") ; M-m is common in Spacemacs
+;;   ;; (setq fcitx-use-dbus t) ; uncomment if you're using Linux
+;;   )
 
 (defun ziyuan/init-org()
     (setq org-hide-emphasis-markers t)  ;;隐藏字体样式标志

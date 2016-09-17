@@ -26,7 +26,9 @@ values."
      ivy
      helm
      auto-completion
-     ;;chinese
+     (chinese :variables
+              chinese-enable-youdao-dict t
+              chinese-enable-fcitx t)
      (better-defaults :variables better-defaults-move-to-end-of-code-first t)   ;;test
      emacs-lisp
      git
@@ -45,7 +47,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(youdao-dictionary)
+   dotspacemacs-additional-packages '()
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(chinese-wbim
                                     chinese-pyim)
@@ -116,7 +118,7 @@ values."
                                :size 20
                                :weight normal
                                :width normal
-                               :powerline-scale 1.0)
+                               :powerline-scale 1.2)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The leader key accessible in `emacs state' and `insert state'
@@ -282,8 +284,15 @@ you should place your code here."
 (setq org-format-latex-options
       (plist-put org-format-latex-options :scale 2.0))      ;调整 LaTeX 预览图片的大小
 
-
 (spacemacs/set-leader-keys "oy" 'youdao-dictionary-search-at-point+)
+
+
+;;中文输入退出到normal模式时，自动变为英文
+(require 'fcitx)
+(setq fcitx-active-evil-states '(insert emacs hybrid)) ; if you use hybrid mode
+(fcitx-aggressive-setup)
+(fcitx-prefix-keys-add "M-m") ; M-m is common in Spacemacs
+(setq fcitx-use-dbus t) ; uncomment if you're using Linux
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
