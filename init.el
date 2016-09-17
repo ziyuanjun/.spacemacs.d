@@ -24,35 +24,31 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      ivy
+     helm
      auto-completion
+     ;;chinese
      (better-defaults :variables better-defaults-move-to-end-of-code-first t)   ;;test
      emacs-lisp
-     ;;fcitx
      git
      markdown
      org
-     ;;org-ref
-     ;;elpy
      ;;htmlize
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
      spell-checking
      syntax-checking
+     ziyuan
      ;; version-control
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(fcitx
-                                      org-ref
-                                      htmlize
-                                      auctex
-                                      anaconda-mode
-                                      )
+   dotspacemacs-additional-packages '(youdao-dictionary)
    ;; A list of packages and/or extensions that will not be install and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(chinese-wbim
+                                    chinese-pyim)
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
    ;; the list `dotspacemacs-configuration-layers'. (default t)
@@ -120,7 +116,7 @@ values."
                                :size 20
                                :weight normal
                                :width normal
-                               :powerline-scale 1.1)
+                               :powerline-scale 1.0)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The leader key accessible in `emacs state' and `insert state'
@@ -272,86 +268,23 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-
-  (require 'org)
-  (setq org-src-fontify-natively t) ;; Org-mode 文本内语法高亮
-  (setq org-agenda-files '("~/GTD")) ;; 设置默认 Org Agenda 文件目录
-  (setq org-use-sub-superscripts nil);;上下标默认不作用，需要时加{}
-  (global-set-key (kbd "C-c a") 'org-agenda)
-  (setq org-confirm-babel-evaluate nil) ;;在用C-c C-c执行代码块时,不再提示“Do you want to execute”
-  (setq org-src-fontify-natively t) ;; Org-mode 文本内语法高亮
-  (global-set-key (kbd "<f1>") 'org-toggle-inline-images);; 显示图片 
-  (require 'org-bullets);; Org Headline Bullet Style (From Level 0 to Level 20)
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-  (setq-default org-bullets-bullet-list '("⓪" "①" "②" "③"
-                                          "④" "⑤" "⑥" "⑦"
-                                          "⑧" "⑨" "⑩" "⑪"
-                                          "⑫" "⑬" "⑭"
-                                          "⑮" "⑯" "⑰"
-                                          "⑱" "⑲" "⑳"))
-
-
-  '(org-babel-load-languages
-    (quote
-     ((emacs-lisp . t)
-      (python . t)
-      (ipython . t)
-      (sh . t)
-      (C++ . t)
-      (C . t)
-      (latex . t)
-      (matlab . t))))
-
-  (require 'fcitx)
-  (fcitx-aggressive-setup)
-  (setq fcitx-use-dbus t)
-
-  ;; Tell the latex export to use the minted package for source code coloration.
-  (setq org-latex-listings 'minted)
-
-(require 'ox-latex)
-(add-to-list 'org-latex-classes
-             '("ctexart"
-		"\\documentclass[UTF8]{ctexart}
-		\\usepackage{amsmath,latexsym,amssymb,mathrsfs,pifont}
-		\\usepackage[T1]{fontenc}
-		\\usepackage{fixltx2e}
-		\\usepackage{graphicx}
-		\\usepackage{subfig} 
-		\\usepackage{grffile}
-		\\usepackage{longtable}
-		\\usepackage{wrapfig}
-		\\usepackage{rotating}
-		\\usepackage{minted}
-		\\usepackage[colorlinks=true]{hyperref}
-		\\tolerance=1000
-		[NO-DEFAULT-PACKAGES]
-		[NO-PACKAGES]" 
-               ("\\section{%s}" . "\\section*{%s}")
-               ("\\subsection{%s}" . "\\subsection*{%s}")
-               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-               ("\\paragraph{%s}" . "\\paragraph*{%s}")
-               ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))) 
-
-
-;; 使用xelatex一步生成PDF
-;(setq-default org-latex-to-pdf-process
-;'("xelatex -interaction nonstopmode %f"
-;"xelatex -interaction nonstopmode %f"))
-(setq-default org-latex-pdf-process
-      '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
-
-;; Tell the latex export to use the minted package for source code coloration.
-(setq org-latex-listings 'minted)
-
-
+(linum-relative-global-mode t)
 (setcdr evil-insert-state-map nil)
 (define-key evil-insert-state-map [escape] 'evil-normal-state)
-
 (setq ns-use-srgb-colorspace nil)
 (setq powerline-default-separator 'arrow)
 
-  )
+(setq-default dotspacemacs-configuration-layers '((chinese :variables
+                                                           chinese-enable-fcitx t)))
+(setq-default dotspacemacs-configuration-layers '((chinese :variables
+                                                           chinese-enable-youdao-dict t)))
+
+(setq org-format-latex-options
+      (plist-put org-format-latex-options :scale 2.0))      ;调整 LaTeX 预览图片的大小
+
+
+(spacemacs/set-leader-keys "oy" 'youdao-dictionary-search-at-point+)
+)
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
