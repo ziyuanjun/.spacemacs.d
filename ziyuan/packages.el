@@ -30,9 +30,7 @@
 ;;; Code:
 
 (defconst ziyuan-packages
-  '(;;fcitx
-    ;; youdao-dictionary
-    company
+  '(company
     org-ref
     org-bullets
     htmlize
@@ -62,27 +60,10 @@ Each entry is either:
 ;;; packages.el ends here
 
 
-;; (defun ziyuan/init-fcitx()
-;;   (use-package fcitx
-;;   :init
-;;   (setq fcitx-active-evil-states '(insert emacs hybrid)) ; if you use hybrid mode
-;;   (fcitx-aggressive-setup)
-;;   (fcitx-prefix-keys-add "M-m") ; M-m is common in Spacemacs
-;;   (setq fcitx-use-dbus t) ; uncomment if you're using Linux
-;;   ))
-
 ;;一个在org中方便插入图片的package, see: https://github.com/abo-abo/org-download
 (defun ziyuan/init-org-download()
   (use-package org-download
     :init))
-
-;; (defun ziyuan/init-youddao-dictionary()
-;;   (use-package youdao-dictionary
-;;     :defer t
-;;     :init
-;;     (spacemacs/set-leader-keys "oy" 'youdao-dictionary-search-at-point+)
-;;     )
-;;   )
 
 (defun ziyuan/init-org-ref()
   (use-package org-ref
@@ -99,14 +80,6 @@ Each entry is either:
 (defun ziyuan/init-anaconda-mode()
   (use-package anaconda-mode
   :init))
-
-;; (defun ziyuan/post-init-fcitx()
-;;   ;; Make sure the following comes before `(fcitx-aggressive-setup)'
-;;   ;; (setq fcitx-active-evil-states '(insert emacs hybrid)) ; if you use hybrid mode
-;;   ;; (fcitx-aggressive-setup)
-;;   ;; (fcitx-prefix-keys-add "M-m") ; M-m is common in Spacemacs
-;;   ;; (setq fcitx-use-dbus t) ; uncomment if you're using Linux
-;;   )
 
 (defun ziyuan/init-org()
     (setq org-hide-emphasis-markers t)  ;;隐藏字体样式标志
@@ -164,7 +137,6 @@ Each entry is either:
       (quote
        ((emacs-lisp . t)
         (python . t)
-        ;;(ipython . t)
         (sh . t)
         (C++ . t)
         (C . t)
@@ -191,11 +163,9 @@ Each entry is either:
     ;; 可以設定任何 ID 或是設成 nil 來使用對稱式加密 (symmetric encryption)
     (setq org-crypt-key nil)
 
-
-
 )
 
-(defun ziyuan/init-org-ref()
+(defun ziyuan/post-init-org-ref()
   (setq reftex-default-bibliography '("~/Refrences/bibliography/refs.bib"))
   ;; see org-ref for use of these variables
   (setq org-ref-bibliography-notes "~/Refrences/bibliography/notes.org"
