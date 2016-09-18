@@ -239,6 +239,11 @@ values."
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
    dotspacemacs-whitespace-cleanup nil
+
+
+   dotspacemacs-startup-lists '((recents . 8)
+                                bookmarks
+                                (projects . 8))
    ))
 
 (defun dotspacemacs/user-init ()
@@ -269,9 +274,6 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-dotspacemacs-startup-lists '((recents . 8)
-                             bookmarks
-                             (projects . 8))
 
 (linum-relative-global-mode t)
 (setcdr evil-insert-state-map nil)
