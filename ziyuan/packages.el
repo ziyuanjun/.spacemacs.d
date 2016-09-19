@@ -34,9 +34,9 @@
     org-ref
     org-bullets
     htmlize
-    auctex
+    ;;auctex
     anaconda-mode
-    (org-download :location (recipe :fetcher github :repo "abo-abo/org-download"))
+    ;; (org-download :location (recipe :fetcher github :repo "abo-abo/org-download"))
     (org :location built-in))
   "The list of Lisp packages required by the ziyuan layer.
 
@@ -61,9 +61,9 @@ Each entry is either:
 
 
 ;;一个在org中方便插入图片的package, see: https://github.com/abo-abo/org-download
-(defun ziyuan/init-org-download()
-  (use-package org-download
-    :init))
+;; (defun ziyuan/init-org-download()
+;;   (use-package org-download
+;;     :init))
 
 (defun ziyuan/init-org-ref()
   (use-package org-ref
@@ -81,7 +81,10 @@ Each entry is either:
   (use-package anaconda-mode
   :init))
 
-(defun ziyuan/init-org()
+;; (defun ziyuan/init-org()
+;;   )
+
+(defun ziyuan/post-init-org()
     (setq org-hide-emphasis-markers t)  ;;隐藏字体样式标志
     (setq org-agenda-files '("~/Nutstore/gtd"))  ;; 设置默认 Org Agenda 文件目录
     (setq org-use-sub-superscripts nil)  ;;上下标默认不作用，需要时加{}
@@ -130,19 +133,28 @@ Each entry is either:
 
   ;; Tell the latex export to use the minted package for source code coloration.
   (setq org-latex-listings 'minted)
-  )
 
-(defun ziyuan/post-init-org()
-    (setq org-babel-load-languages
-      (quote
-       ((emacs-lisp . t)
-        (python . t)
-        (sh . t)
-        (C++ . t)
-        (C . t)
-        (dot . t)
-        (latex . t)
-        (matlab . t))))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((sh . t)
+     (dot . t)
+     (latex .t)
+     (python . t)
+     (emacs-lisp . t)
+     (C . t)
+     (matlab . t)
+     ))
+
+    ;; (setq org-babel-load-languages
+    ;;   (quote
+    ;;    ((emacs-lisp . t)
+    ;;     (python . t)
+    ;;     (sh . t)
+    ;;     (C++ . t)
+    ;;     (C . t)
+    ;;     (dot . t)
+    ;;     (latex . t)
+    ;;     (matlab . t))))
 
     ;; 加密文章
     ;; "http://coldnew.github.io/blog/2013/07/13_5b094.html"

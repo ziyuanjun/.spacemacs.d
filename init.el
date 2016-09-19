@@ -298,6 +298,10 @@ you should place your code here."
 (fcitx-aggressive-setup)
 (fcitx-prefix-keys-add "M-m") ; M-m is common in Spacemacs
 (setq fcitx-use-dbus t) ; uncomment if you're using Linux
+
+
+(setq-default org-download-image-dir "~/Pictures/org-download/")
+
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
