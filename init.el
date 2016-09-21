@@ -31,6 +31,8 @@ values."
               chinese-enable-fcitx t)
      (better-defaults :variables better-defaults-move-to-end-of-code-first t)   ;;test
      emacs-lisp
+     (spacemacs-layouts :variables layouts-enable-autosave nil
+                        layouts-autosave-delay 300)
      git
      markdown
      org
@@ -104,10 +106,10 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(monokai
+                         solarized-dark
+                         solarized-light
                          spacemacs-dark
                          spacemacs-light
-                         solarized-light
-                         solarized-dark
                          leuven
                          zenburn)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
@@ -254,12 +256,12 @@ executes.
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
 
-  (setq configuration-layer--elpa-archives
-        '(("melpa-cn" . "http://elpa.zilongshanren.com/melpa/")
-          ("org-cn"   . "http://elpa.zilongshanren.com/org/")
-          ("gnu-cn"   . "http://elpa.zilongshanren.com/gnu/")
-          ("elpy" . "https://jorgenschaefer.github.io/packages/")
-          ))
+  ;; (setq configuration-layer--elpa-archives
+  ;;       '(("melpa-cn" . "http://elpa.zilongshanren.com/melpa/")
+  ;;         ("org-cn"   . "http://elpa.zilongshanren.com/org/")
+  ;;         ("gnu-cn"   . "http://elpa.zilongshanren.com/gnu/")
+  ;;         ("elpy" . "https://jorgenschaefer.github.io/packages/")
+  ;;         ))
 
   (setq tramp-ssh-controlmaster-options
         "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no")
@@ -268,40 +270,36 @@ before packages are loaded. If you are unsure, you should try in setting them in
   )
 
 (defun dotspacemacs/user-config ()
-  "Configuration function for user code.
-This function is called at the very end of Spacemacs initialization after
-layers configuration.
-This is the place where most of your configurations should be done. Unless it is
-explicitly specified that a variable should be set before a package is loaded,
-you should place your code here."
+    "Configuration function for user code.
+  This function is called at the very end of Spacemacs initialization after
+  layers configuration.
+  This is the place where most of your configurations should be done. Unless it is
+  explicitly specified that a variable should be set before a package is loaded,
+  you should place your code here."
+    (setq-default dotspacemacs-themes '(monokai leuven solarized-dark))
+  (linum-relative-global-mode t)
+  (setcdr evil-insert-state-map nil)
+  (define-key evil-insert-state-map [escape] 'evil-normal-state)
+  (setq ns-use-srgb-colorspace nil)
+  (setq powerline-default-separator 'arrow)
 
-(linum-relative-global-mode t)
-(setcdr evil-insert-state-map nil)
-(define-key evil-insert-state-map [escape] 'evil-normal-state)
-(setq ns-use-srgb-colorspace nil)
-(setq powerline-default-separator 'arrow)
+  (setq-default dotspacemacs-configuration-layers '((chinese :variables
+                                                            chinese-enable-fcitx t)))
+  (setq-default dotspacemacs-configuration-layers '((chinese :variables
+                                                            chinese-enable-youdao-dict t)))
+  (setq org-format-latex-options
+        (plist-put org-format-latex-options :scale 2.0))      ;调整 LaTeX 预览图片的大小
 
-(setq-default dotspacemacs-configuration-layers '((chinese :variables
-                                                           chinese-enable-fcitx t)))
-(setq-default dotspacemacs-configuration-layers '((chinese :variables
-                                                           chinese-enable-youdao-dict t)))
+  (spacemacs/set-leader-keys "oy" 'youdao-dictionary-search-at-point+)
 
-(setq org-format-latex-options
-      (plist-put org-format-latex-options :scale 2.0))      ;调整 LaTeX 预览图片的大小
+  ;;中文输入退出到normal模式时，自动变为英文
+  (require 'fcitx)
+  (setq fcitx-active-evil-states '(insert emacs hybrid)) ; if you use hybrid mode
+  (fcitx-aggressive-setup)
+  (fcitx-prefix-keys-add "M-m") ; M-m is common in Spacemacs
+  (setq fcitx-use-dbus t) ; uncomment if you're using Linux
 
-(spacemacs/set-leader-keys "oy" 'youdao-dictionary-search-at-point+)
-
-
-;;中文输入退出到normal模式时，自动变为英文
-(require 'fcitx)
-(setq fcitx-active-evil-states '(insert emacs hybrid)) ; if you use hybrid mode
-(fcitx-aggressive-setup)
-(fcitx-prefix-keys-add "M-m") ; M-m is common in Spacemacs
-(setq fcitx-use-dbus t) ; uncomment if you're using Linux
-
-
-(setq-default org-download-image-dir "~/Pictures/org-download/")
-
+  (setq-default org-download-image-dir "~/Pictures/org-download/")
 )
 
 ;; Do not write anything past this comment. This is where Emacs will

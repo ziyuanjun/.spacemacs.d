@@ -35,6 +35,9 @@
     org-bullets
     htmlize
     ;;auctex
+    (blog-admin :location (recipe
+                           :fetcher github
+                           :repo "codefalling/blog-admin"))
     anaconda-mode
     ;; (org-download :location (recipe :fetcher github :repo "abo-abo/org-download"))
     (org :location built-in))
@@ -81,8 +84,28 @@ Each entry is either:
   (use-package anaconda-mode
   :init))
 
-;; (defun ziyuan/init-org()
-;;   )
+
+(defun ziyuan/init-blog-admin()
+  (use-package blog-admin
+    :init
+    (progn
+      ;; do your configuration here
+      ))
+   )
+
+(defun ziyuan/post-init-blog-admin()
+  (require 'blog-admin)
+
+  (setq blog-admin-backend-path "~/Program/Hexo/source/_posts")
+  (setq blog-admin-backend-type 'hexo)
+  (setq blog-admin-backend-new-post-in-drafts t) ;; create new post in drafts by default
+  (setq blog-admin-backend-new-post-with-same-name-dir t) ;; create same-name directory with new post
+  (setq blog-admin-backend-hexo-config-file "~/Program/Hexo/_config.yml") ;; default assumes _config.yml
+  
+  (add-hook 'blog-admin-backend-after-new-post-hook 'find-file)
+
+  )
+
 
 (defun ziyuan/post-init-org()
     (setq org-hide-emphasis-markers t)  ;;隐藏字体样式标志

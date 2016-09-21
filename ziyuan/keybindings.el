@@ -7,3 +7,6 @@
 (define-key evil-visual-state-map (kbd ",/") 'comment-line)
 
 (global-set-key (kbd "C-c a") 'org-agenda)
+
+(spacemacs/set-leader-keys "oll" 'ziyuan/load-my-layout)
+(spacemacs/set-leader-keys "ols" 'ziyuan/save-my-layout)
