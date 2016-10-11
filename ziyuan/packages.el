@@ -34,6 +34,8 @@
     org-ref
     org-bullets
     htmlize
+    csharp-mode
+    elpy
     ;;auctex
     (blog-admin :location (recipe
                            :fetcher github
@@ -68,6 +70,14 @@ Each entry is either:
 ;;   (use-package org-download
 ;;     :init))
 
+(defun ziyuan/init-elpy()
+  (use-package elpy
+    :init))
+
+(defun ziyuan/init-csharp-mode()
+  (use-package csharp-mode
+    :init))
+
 (defun ziyuan/init-org-ref()
   (use-package org-ref
   :init))
@@ -93,6 +103,14 @@ Each entry is either:
       ))
    )
 
+(defun ziyuan/post-init-elpy()
+
+  (package-initialize)
+  (elpy-enable)
+  (setq python-shell-completion-native-enable nil)
+
+  )
+
 (defun ziyuan/post-init-blog-admin()
   (require 'blog-admin)
 
@@ -106,6 +124,11 @@ Each entry is either:
 
   )
 
+(defun ziyuan/post-init-csharp-mode()
+  (require 'cl)
+  (require 'csharp-mode)
+
+  )
 
 (defun ziyuan/post-init-org()
     (setq org-hide-emphasis-markers t)  ;;隐藏字体样式标志
@@ -121,6 +144,15 @@ Each entry is either:
           org-support-shift-select 'always)
 
     (setq org-export-babel-evaluate (quote inline-only))
+
+    (setq org-agenda-span 'day);; only today's date is shown by default.
+
+    (with-eval-after-load 'org-agenda
+      (define-key org-agenda-mode-map (kbd "P") 'org-pomodoro)
+      (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode
+        "." 'spacemacs/org-agenda-transient-state/body)
+      )
+
 
   (require 'ox-latex)
   (add-to-list 'org-latex-classes
@@ -157,27 +189,20 @@ Each entry is either:
   ;; Tell the latex export to use the minted package for source code coloration.
   (setq org-latex-listings 'minted)
 
+  (setq org-plantuml-jar-path
+        (expand-file-name "~/.spacemacs.d/plantuml.jar"))
+
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((sh . t)
      (dot . t)
      (latex .t)
      (python . t)
+     (plantuml . t)
      (emacs-lisp . t)
      (C . t)
      (matlab . t)
      ))
-
-    ;; (setq org-babel-load-languages
-    ;;   (quote
-    ;;    ((emacs-lisp . t)
-    ;;     (python . t)
-    ;;     (sh . t)
-    ;;     (C++ . t)
-    ;;     (C . t)
-    ;;     (dot . t)
-    ;;     (latex . t)
-    ;;     (matlab . t))))
 
     ;; 加密文章
     ;; "http://coldnew.github.io/blog/2013/07/13_5b094.html"
@@ -210,6 +235,13 @@ Each entry is either:
 
 (defun ziyuan/post-init-company()
     (setq global-company-mode 1) ; 开启全局 Company 补全
+
+    ;; 补全时用C-n,C-p
+    (with-eval-after-load 'company
+      (define-key company-active-map (kbd "M-n") nil)
+      (define-key company-active-map (kbd "M-p") nil)
+      (define-key company-active-map (kbd "C-n") #'company-select-next)
+      (define-key company-active-map (kbd "C-p") #'company-select-previous))
     )
 
 (defun ziyuan/post-init-org-bullets()

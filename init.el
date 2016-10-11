@@ -40,7 +40,7 @@ values."
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
-     spell-checking
+     ;; spell-checking ;;很少写英文文章，就暂时不用拼写检查了 
      syntax-checking
      ziyuan
      ;; version-control
@@ -256,12 +256,12 @@ executes.
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
 
-  ;; (setq configuration-layer--elpa-archives
-  ;;       '(("melpa-cn" . "http://elpa.zilongshanren.com/melpa/")
-  ;;         ("org-cn"   . "http://elpa.zilongshanren.com/org/")
-  ;;         ("gnu-cn"   . "http://elpa.zilongshanren.com/gnu/")
-  ;;         ("elpy" . "https://jorgenschaefer.github.io/packages/")
-  ;;         ))
+  (setq configuration-layer--elpa-archives
+        '(("melpa-cn" . "http://elpa.zilongshanren.com/melpa/")
+          ("org-cn"   . "http://elpa.zilongshanren.com/org/")
+          ("gnu-cn"   . "http://elpa.zilongshanren.com/gnu/")
+          ("elpy" . "https://jorgenschaefer.github.io/packages/")
+          ))
 
   (setq tramp-ssh-controlmaster-options
         "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no")
@@ -276,6 +276,20 @@ before packages are loaded. If you are unsure, you should try in setting them in
   This is the place where most of your configurations should be done. Unless it is
   explicitly specified that a variable should be set before a package is loaded,
   you should place your code here."
+
+    ;;模拟vim的n zz功能
+    (defadvice evil-search-next (after advice-for-evil-search-next activate)
+      (evil-scroll-line-to-center (line-number-at-pos)))
+    (defadvice evil-search-previous (after advice-for-evil-search-previous activate)
+      (evil-scroll-line-to-center (line-number-at-pos)))
+
+    ;;打开menu bar，有时能起到提示作用
+    (menu-bar-mode t)
+
+    (setenv "PATH" "/home/ziyuan/anaconda3/bin:/usr/local/bin:/usr/bin:/bin:/bin/bash:/home/ziyuan/Mysoft/pymacs")
+    (setq exec-path (split-string (getenv "PATH") path-separator))
+
+
     (setq-default dotspacemacs-themes '(monokai leuven solarized-dark))
   (linum-relative-global-mode t)
   (setcdr evil-insert-state-map nil)
@@ -292,14 +306,23 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   (spacemacs/set-leader-keys "oy" 'youdao-dictionary-search-at-point+)
 
+  ;; j and k to behave like g j and g k
+  (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
+  (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
   ;;中文输入退出到normal模式时，自动变为英文
   (require 'fcitx)
+  ;;(package-initialize)
+  ;;(elpy-enable)
   (setq fcitx-active-evil-states '(insert emacs hybrid)) ; if you use hybrid mode
   (fcitx-aggressive-setup)
   (fcitx-prefix-keys-add "M-m") ; M-m is common in Spacemacs
   (setq fcitx-use-dbus t) ; uncomment if you're using Linux
 
   (setq-default org-download-image-dir "~/Pictures/org-download/")
+
+  (setq python-shell-extra-pythonpaths
+    (quote
+     ("/home/ziyuan/Program/PhdWork/" "/home/ziyuan/Program/PhdWork/antenna1/")))
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
