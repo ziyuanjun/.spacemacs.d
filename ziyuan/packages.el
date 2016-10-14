@@ -35,6 +35,7 @@
     org-bullets
     htmlize
     csharp-mode
+    org-pomodoro
     elpy
     ;;auctex
     (blog-admin :location (recipe
@@ -130,6 +131,16 @@ Each entry is either:
 
   )
 
+(defun ziyuan/post-init-org-pomodoro ()
+  (progn
+    (add-hook 'org-pomodoro-finished-hook '("notify-send Break"))
+    ;;(add-hook 'org-pomodoro-short-break-finished-hook '(lambda () (ziyuan/growl-notification "Short Break" "🐝 Ready to Go?" t)))
+    ;;(add-hook 'org-pomodoro-long-break-finished-hook '(lambda () (ziyuan/growl-notification "Long Break" " 💪 Ready to Go?" t)))
+    ;;(setq org-timer-default-timer 2)
+    ))
+
+
+
 (defun ziyuan/post-init-org()
     (setq org-hide-emphasis-markers t)  ;;隐藏字体样式标志
     (setq org-agenda-files '("~/Nutstore/gtd"))  ;; 设置默认 Org Agenda 文件目录
@@ -143,15 +154,66 @@ Each entry is either:
           org-confirm-babel-evaluate nil
           org-support-shift-select 'always)
 
-    (setq org-export-babel-evaluate (quote inline-only))
+
+    (with-eval-after-load 'org
+      (define-key org-mode-map (kbd "RET") 'newline-and-indent) ;;回车后自动缩进
+    )
+
+    (spacemacs/set-leader-keys-for-major-mode 'org-mode
+      "tl" 'org-toggle-link-display)
+
+    (setq org-export-babel-evaluate (quote inline-only));;export org file的时候只执行inline的代码
 
     (setq org-agenda-span 'day);; only today's date is shown by default.
+
+    (setq org-agenda-inhibit-startup t)   ;; ~50x speedup
+    (setq org-agenda-use-tag-inheritance nil) ;; 3-4x speedup
+    (setq org-agenda-window-setup 'current-window)
+    (setq org-log-done t)
 
     (with-eval-after-load 'org-agenda
       (define-key org-agenda-mode-map (kbd "P") 'org-pomodoro)
       (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode
         "." 'spacemacs/org-agenda-transient-state/body)
       )
+
+
+
+   (setq org-capture-templates
+            '(("t" "Todo" entry (file+headline "~/Nutstore/gtd/mygtd.org" "Tasks")
+               "* TODO [#B] %?\n  %i\n"
+               :empty-lines 1)
+              ("n" "notes" entry (file+headline "~/Nutstore/gtd/notes.org" "Quick notes")
+               "* %?\n  %i\n %U"
+               :empty-lines 1)
+              ("b" "Blog Ideas" entry (file+headline "~/Nutstore/gtd/notes.org" "Blog Ideas")
+               "* TODO [#B] %?\n  %i\n %U"
+               :empty-lines 1)
+              ("s" "Code Snippet" entry
+               (file "~/Nutstore/gtd/snippets.org")
+               "* %?\t%^g\n#+BEGIN_SRC %^{language}\n\n#+END_SRC")
+              ("l" "links" entry (file+headline "~/org-notes/notes.org" "Quick notes")
+               "* TODO [#C] %?\n  %i\n %a \n %U"
+               :empty-lines 1)
+              ("j" "Journal Entry"
+               entry (file+headline "~/Nutstore/gtd/notes.org" "Journal .etc")
+               "* TODO [#C] %?\n  %i\n %a \n %U"
+               :empty-lines 1)))
+
+   (setq org-agenda-custom-commands
+         '(
+           ("w" . "任务安排")
+           ("wa" "重要且紧急的任务" tags-todo "+PRIORITY=\"A\"")
+           ("wb" "重要且不紧急的任务" tags-todo "-Weekly-Monthly-Daily+PRIORITY=\"B\"")
+           ("wc" "不重要且紧急的任务" tags-todo "+PRIORITY=\"C\"")
+           ;; ("b" "Blog" tags-todo "BLOG")
+           ;; ("p" . "项目安排")
+           ;; ("pw" tags-todo "PROJECT+WORK+CATEGORY=\"cocos2d-x\"")
+           ;; ("pl" tags-todo "PROJECT+DREAM+CATEGORY=\"zilongshanren\"")
+            ("W" "Weekly Review"
+            ((stuck "") ;; review stuck projects as designated by org-stuck-projects
+             (tags-todo "PROJECT") ;; review all projects (assuming you use todo keywords to designate projects)
+             ))))
 
 
   (require 'ox-latex)
@@ -192,6 +254,8 @@ Each entry is either:
   (setq org-plantuml-jar-path
         (expand-file-name "~/.spacemacs.d/plantuml.jar"))
 
+  (setq org-ditaa-jar-path "~/.spacemacs.d/ditaa.jar")
+
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((sh . t)
@@ -202,6 +266,7 @@ Each entry is either:
      (emacs-lisp . t)
      (C . t)
      (matlab . t)
+     (ditaa . t)
      ))
 
     ;; 加密文章
@@ -222,8 +287,8 @@ Each entry is either:
     ;; 用於加密的 GPG 金鑰
     ;; 可以設定任何 ID 或是設成 nil 來使用對稱式加密 (symmetric encryption)
     (setq org-crypt-key nil)
-
 )
+
 
 (defun ziyuan/post-init-org-ref()
   (setq reftex-default-bibliography '("~/Refrences/bibliography/refs.bib"))

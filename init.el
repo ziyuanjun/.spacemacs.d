@@ -277,6 +277,13 @@ before packages are loaded. If you are unsure, you should try in setting them in
   explicitly specified that a variable should be set before a package is loaded,
   you should place your code here."
 
+    ;; A test about Orgpomodo
+    ;;(add-to-list 'org-modules 'org-timer)
+    ;;(setq org-timer-default-timer 2)
+    ;; (add-hook 'org-clock-in-hook (lambda ()
+    ;;                                (if (not org-timer-current-timer) 
+    ;;                                    (org-timer-set-timer '(2)))))
+
     ;;模拟vim的n zz功能
     (defadvice evil-search-next (after advice-for-evil-search-next activate)
       (evil-scroll-line-to-center (line-number-at-pos)))
