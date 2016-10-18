@@ -143,7 +143,7 @@ Each entry is either:
 
 (defun ziyuan/post-init-org()
     (setq org-hide-emphasis-markers t)  ;;隐藏字体样式标志
-    (setq org-agenda-files '("~/Nutstore/gtd"))  ;; 设置默认 Org Agenda 文件目录
+    (setq org-agenda-files '("~/Nutstore/gtd/mygtd.org" "~/Nutstore/gtd/yjy.org" "~/Nutstore/gtd/notes.org" "~/Nutstore/gtd/mobile.org" ))  ;; 设置默认 Org Agenda 文件目录
     (setq org-use-sub-superscripts nil)  ;;上下标默认不作用，需要时加{}
     (setq org-confirm-babel-evaluate nil) ;;在用C-c C-c执行代码块时,不再提示“Do you want to execute”
     (setq org-src-fontify-natively t) ;; Org-mode 文本内语法高亮
@@ -186,6 +186,9 @@ Each entry is either:
               ("n" "notes" entry (file+headline "~/Nutstore/gtd/notes.org" "Quick notes")
                "* %?\n  %i\n %U"
                :empty-lines 1)
+              ("y" "YJY related" entry (file+headline "~/Nutstore/gtd/yjy.org" "YJY")
+               "* TODO [#B] %?\n  %i\n %U"
+               :empty-lines 1)
               ("b" "Blog Ideas" entry (file+headline "~/Nutstore/gtd/notes.org" "Blog Ideas")
                "* TODO [#B] %?\n  %i\n %U"
                :empty-lines 1)
@@ -202,6 +205,23 @@ Each entry is either:
 
    (setq org-agenda-custom-commands
          '(
+           ("H" "Office and Home Lists"
+            ((agenda)
+             (tags-todo "OFFICE")
+             (tags-todo "HOME")
+             ;;(tags-todo "PROJECT")
+             ;;(tags-todo "Travel")
+             ;;(tags-todo "READING")
+             ))
+
+           ("D" "Daily Action List"
+            (
+             (agenda "" ((org-agenda-ndays 1)
+                         (org-agenda-sorting-strategy
+                          (quote ((agenda time-up priority-down tag-up) )))
+                         (org-deadline-warning-days 0)
+                         ))))
+
            ("w" . "任务安排")
            ("wa" "重要且紧急的任务" tags-todo "+PRIORITY=\"A\"")
            ("wb" "重要且不紧急的任务" tags-todo "-Weekly-Monthly-Daily+PRIORITY=\"B\"")

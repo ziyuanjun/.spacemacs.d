@@ -49,7 +49,9 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(chinese-fonts-setup
+                                      cal-china-x
+                                      )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(chinese-wbim
                                     chinese-pyim)
@@ -116,8 +118,8 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("Consolas"
-                               :size 20
+   dotspacemacs-default-font '("Ubuntu Mono"
+                               :size 22
                                :weight normal
                                :width normal
                                :powerline-scale 1.2)
@@ -293,7 +295,42 @@ before packages are loaded. If you are unsure, you should try in setting them in
     ;;打开menu bar，有时能起到提示作用
     (menu-bar-mode t)
 
-    (setenv "PATH" "/home/ziyuan/anaconda3/bin:/usr/local/bin:/usr/bin:/bin:/bin/bash:/home/ziyuan/Mysoft/pymacs")
+
+    (require 'chinese-fonts-setup)
+    ;; 让 chinese-fonts-setup 随着 emacs 自动生效。
+    (chinese-fonts-setup-enable)
+    ;; 让 spacemacs mode-line 中的 Unicode 图标正确显示。
+    (cfs-set-spacemacs-fallback-fonts)
+    (setq cfs-use-face-font-rescale t)
+
+    (add-to-list 'load-path "~/.emacs.d/elpa/cal-china-x-20160102.124") 
+    (require 'cal-china-x)
+    (setq mark-holidays-in-calendar t)
+    (setq cal-china-x-important-holidays cal-china-x-chinese-holidays)
+    (setq calendar-holidays cal-china-x-important-holidays)
+    ;;cal-china-x的配置参考http://blog.sina.com.cn/s/blog_569c4e040101gt4u.html
+    (setq my-holidays '(;;公历节日
+                        (holiday-fixed 2 14 "情人节")
+                        (holiday-fixed 9 10 "教师节")
+                        (holiday-float 6 0 3 "父亲节")
+                        ;;农历节日
+                        (holiday-lunar 1 1 "春节" 0)
+                        (holiday-lunar 1 15 "元宵节" 0)
+                        (holiday-solar-term "清明" "清明节")
+                        (holiday-lunar 5 5 "端午节" 0)
+                        (holiday-lunar 7 7 "七夕情人节" 0)
+                        (holiday-lunar 8 15 "中秋节" 0)
+                        ;;纪念日
+                        (holiday-fixed 11 17 "老婆阳历生日")
+                        (holiday-lunar 10 16 "老婆农历生日" 0)
+                        (holiday-lunar 9 18 "某人农历生日" 0) ))
+    (setq calendar-holidays my-holidays) ;只显示我定制的节假日
+
+    ;;python3
+    ;;(setenv "PATH" "/home/ziyuan/anaconda3/bin:/usr/local/bin:/usr/bin:/bin:/bin/bash:/home/ziyuan/Mysoft/pymacs")
+
+    ;;python2
+    (setenv "PATH" "/home/ziyuan/anaconda2/bin:/usr/local/bin:/usr/bin:/bin:/bin/bash")
     (setq exec-path (split-string (getenv "PATH") path-separator))
 
 
