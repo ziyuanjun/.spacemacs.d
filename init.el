@@ -51,6 +51,7 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(chinese-fonts-setup
                                       cal-china-x
+                                      highlight-thing
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(chinese-wbim
@@ -284,7 +285,15 @@ before packages are loaded. If you are unsure, you should try in setting them in
     ;;(setq org-timer-default-timer 2)
     ;; (add-hook 'org-clock-in-hook (lambda ()
     ;;                                (if (not org-timer-current-timer) 
-    ;;                                    (org-timer-set-timer '(2)))))
+    ;;                                   (org-timer-set-timer '(2)))))
+
+    ;; (global-highlight-thing-mode t)
+    ;; (setq highlight-thing-what-thing 'symbol)
+    ;; (setq highlight-thing-delay-seconds 0.3)
+    ;; (setq highlight-thing-limit-to-defun t)
+    ;; (setq highlight-thing-case-sensitive-p t)   
+    (setq yas-snippet-dirs (append '("/home/ziyuan/.spacemacs.d/snippets") yas-snippet-dirs))
+    (setq-default yas--default-user-snippets-dir "/home/ziyuan/.spacemacs.d/snippets")
 
     ;;模拟vim的n zz功能
     (defadvice evil-search-next (after advice-for-evil-search-next activate)
@@ -302,6 +311,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
     ;; 让 spacemacs mode-line 中的 Unicode 图标正确显示。
     (cfs-set-spacemacs-fallback-fonts)
     (setq cfs-use-face-font-rescale t)
+    
+    (set-fontset-font "fontset-default" 'unicode"WenQuanYi Bitmap Song 12") ;;for linux
 
     (add-to-list 'load-path "~/.emacs.d/elpa/cal-china-x-20160102.124") 
     (require 'cal-china-x)
