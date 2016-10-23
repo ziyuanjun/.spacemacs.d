@@ -3,3 +3,6 @@
 # key: ali.
 # --
 \begin{align}
+$1=&$2\\\\ \\notag
+  =&$3
+\end{align}
