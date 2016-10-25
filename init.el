@@ -102,7 +102,7 @@ values."
    dotspacemacs-startup-lists '(recents projects)
    ;; Number of recent files to show in the startup buffer. Ignored if
    ;; `dotspacemacs-startup-lists' doesn't include `recents'. (default 5)
-   dotspacemacs-startup-recent-list-size 10
+   dotspacemacs-startup-recent-list-size 16
    ;; Default major mode of the scratch buffer (default `text-mode')
    dotspacemacs-scratch-mode 'text-mode
    ;; List of themes, the first of the list is loaded when spacemacs starts.
@@ -245,10 +245,9 @@ values."
    ;; (default nil)
    dotspacemacs-whitespace-cleanup nil
 
-
-   dotspacemacs-startup-lists '((recents . 8)
+   dotspacemacs-startup-lists '((recents . 16)
                                 bookmarks
-                                (projects . 8))
+                                (projects . 16))
    ))
 
 (defun dotspacemacs/user-init ()
@@ -268,7 +267,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   (setq tramp-ssh-controlmaster-options
         "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no")
-
 
   )
 
@@ -292,10 +290,11 @@ before packages are loaded. If you are unsure, you should try in setting them in
     ;; (setq highlight-thing-delay-seconds 0.3)
     ;; (setq highlight-thing-limit-to-defun t)
     ;; (setq highlight-thing-case-sensitive-p t)   
+    
     (setq yas-snippet-dirs (append '("/home/ziyuan/.spacemacs.d/snippets") yas-snippet-dirs))
     (setq-default yas--default-user-snippets-dir "/home/ziyuan/.spacemacs.d/snippets")
 
-    ;;模拟vim的n zz功能
+    ;;模拟vim的n zz功能('*'高亮某个词后，'n'向下时高亮词移动到屏中部，'zz'也可单独使用 )
     (defadvice evil-search-next (after advice-for-evil-search-next activate)
       (evil-scroll-line-to-center (line-number-at-pos)))
     (defadvice evil-search-previous (after advice-for-evil-search-previous activate)
@@ -304,7 +303,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
     ;;打开menu bar，有时能起到提示作用
     (menu-bar-mode t)
 
-
     (require 'chinese-fonts-setup)
     ;; 让 chinese-fonts-setup 随着 emacs 自动生效。
     (chinese-fonts-setup-enable)
@@ -312,7 +310,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (cfs-set-spacemacs-fallback-fonts)
     (setq cfs-use-face-font-rescale t)
     
-    (set-fontset-font "fontset-default" 'unicode"WenQuanYi Bitmap Song 12") ;;for linux
+    (set-fontset-font "fontset-default" 'unicode "WenQuanYi Bitmap Song 12") ;;for linux
 
     (add-to-list 'load-path "~/.emacs.d/elpa/cal-china-x-20160102.124") 
     (require 'cal-china-x)
@@ -338,10 +336,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (setq calendar-holidays my-holidays) ;只显示我定制的节假日
 
     ;;python3
-    ;;(setenv "PATH" "/home/ziyuan/anaconda3/bin:/usr/local/bin:/usr/bin:/bin:/bin/bash:/home/ziyuan/Mysoft/pymacs")
+    ;;(setenv "PATH" "/home/ziyuan/anaconda3/bin:/usr/local/bin:/usr/bin:/bin:/bin/bash:/home/ziyuan/MySoft/pymacs")
 
     ;;python2
-    (setenv "PATH" "/home/ziyuan/anaconda2/bin:/usr/local/bin:/usr/bin:/bin:/bin/bash")
+    (setenv "PATH" "/home/ziyuan/anaconda2/bin:/usr/local/bin:/usr/bin:/bin:/bin/bash:/home/ziyuan/MySoft/emacs/lib-src")
     (setq exec-path (split-string (getenv "PATH") path-separator))
 
 
