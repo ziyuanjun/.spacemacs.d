@@ -36,12 +36,12 @@
     htmlize
     csharp-mode
     org-pomodoro
-    elpy
+ ;;   elpy
     ;;auctex
     (blog-admin :location (recipe
                            :fetcher github
                            :repo "codefalling/blog-admin"))
-    anaconda-mode
+  ;;  anaconda-mode
     ;; (org-download :location (recipe :fetcher github :repo "abo-abo/org-download"))
     (org :location built-in))
   "The list of Lisp packages required by the ziyuan layer.
@@ -71,9 +71,6 @@ Each entry is either:
 ;;   (use-package org-download
 ;;     :init))
 
-(defun ziyuan/init-elpy()
-  (use-package elpy
-    :init))
 
 (defun ziyuan/init-csharp-mode()
   (use-package csharp-mode
@@ -91,11 +88,6 @@ Each entry is either:
   (use-package htmlize
   :init))
 
-(defun ziyuan/init-anaconda-mode()
-  (use-package anaconda-mode
-  :init))
-
-
 (defun ziyuan/init-blog-admin()
   (use-package blog-admin
     :init
@@ -103,14 +95,6 @@ Each entry is either:
       ;; do your configuration here
       ))
    )
-
-(defun ziyuan/post-init-elpy()
-
-  (package-initialize)
-  (elpy-enable)
-  (setq python-shell-completion-native-enable nil)
-
-  )
 
 (defun ziyuan/post-init-blog-admin()
   (require 'blog-admin)

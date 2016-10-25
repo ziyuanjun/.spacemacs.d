@@ -36,6 +36,8 @@ values."
      git
      markdown
      org
+    (python :variables
+         python-test-runner '(nose pytest))
      ;;htmlize
      ;; (shell :variables
      ;;        shell-default-height 30
