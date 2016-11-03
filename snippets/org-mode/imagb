@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: insert image in hexo blog 
+# key: imagb
+# --
+#+BEGIN_HTML
+<img src="/Images/$1.png" alt="Drawing" width="400px" />
+#+END_HTML

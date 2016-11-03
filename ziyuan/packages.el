@@ -137,8 +137,10 @@ Each entry is either:
           org-src-fontify-natively t  ;; Org-mode 文本内语法高亮
           org-confirm-babel-evaluate nil
           org-support-shift-select 'always)
-
-
+    
+    (setq org-image-actual-width '(400))
+    ;;=> if there is a #+ATTR.*: width="200", resize to 200, otherwise resize to 400
+    
     (with-eval-after-load 'org
       (define-key org-mode-map (kbd "RET") 'newline-and-indent) ;;回车后自动缩进
     )
@@ -249,7 +251,7 @@ Each entry is either:
                 '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
                   "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
                   "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-                  "rm -fr %b.out %b.log %b.tex auto"
+                  "rm -fr %b.out %b.log auto"
                   ))
 
   ;; Tell the latex export to use the minted package for source code coloration.
@@ -265,6 +267,7 @@ Each entry is either:
    '((sh . t)
      (dot . t)
      (latex .t)
+     (asymptote .t)
      (python . t)
      (plantuml . t)
      (emacs-lisp . t)

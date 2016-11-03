@@ -36,6 +36,7 @@ values."
      git
      markdown
      org
+     pandoc
     (python :variables
          python-test-runner '(nose pytest))
      ;;htmlize
@@ -57,7 +58,8 @@ values."
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(chinese-wbim
-                                    chinese-pyim)
+                                    chinese-pyim
+                                    vi-tilde-fringe)
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
    ;; the list `dotspacemacs-configuration-layers'. (default t)
@@ -88,7 +90,7 @@ values."
    ;; variable is `emacs' then the `holy-mode' is enabled at startup. `hybrid'
    ;; uses emacs key bindings for vim's insert mode, but otherwise leaves evil
    ;; unchanged. (default 'vim)
-   dotspacemacs-editing-style 'vim
+   dotspacemacs-editing-style 'hybrid
    ;; If non nil output loading progress in `*Messages*' buffer. (default nil)
    dotspacemacs-verbose-loading nil
    ;; Specify the startup banner. Default value is `official', it displays
@@ -292,9 +294,27 @@ before packages are loaded. If you are unsure, you should try in setting them in
     ;; (setq highlight-thing-delay-seconds 0.3)
     ;; (setq highlight-thing-limit-to-defun t)
     ;; (setq highlight-thing-case-sensitive-p t)   
-    
+    (add-to-list 'load-path "/usr/local/share/asymptote")
+    (autoload 'asy-mode "asy-mode.el" "Asymptote major mode." t)
+    (autoload 'lasy-mode "asy-mode.el" "hybrid Asymptote/Latex major mode." t)
+    (autoload 'asy-insinuate-latex "asy-mode.el" "Asymptote insinuate LaTeX." t)
+    (add-to-list 'auto-mode-alist '("\\.asy$" . asy-mode))
+
+    (defalias 'display-buffer-in-major-side-window 'window--make-major-side-window);;这是spacemacs的一个bug
     (setq yas-snippet-dirs (append '("/home/ziyuan/.spacemacs.d/snippets") yas-snippet-dirs))
     (setq-default yas--default-user-snippets-dir "/home/ziyuan/.spacemacs.d/snippets")
+
+    (require 'yasnippet)
+    (yas-global-mode 1)
+    ;; Remove Yasnippet's default tab key binding
+    (define-key yas-minor-mode-map (kbd "<tab>") nil)
+    (define-key yas-minor-mode-map (kbd "TAB") nil)
+    ;; Set Yasnippet's key binding to shift+tab
+    (define-key yas-minor-mode-map (kbd "<backtab>") 'yas-expand)
+    ;; Alternatively use Control-c + tab
+    (define-key yas-minor-mode-map (kbd "\C-c TAB") 'yas-expand)
+
+
 
     ;;模拟vim的n zz功能('*'高亮某个词后，'n'向下时高亮词移动到屏中部，'zz'也可单独使用 )
     (defadvice evil-search-next (after advice-for-evil-search-next activate)
@@ -378,6 +398,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq python-shell-extra-pythonpaths
     (quote
      ("/home/ziyuan/Program/PhdWork/" "/home/ziyuan/Program/PhdWork/antenna1/")))
+
+  (setq-default evil-escape-key-sequence "fd")
+ ;;(define-key evil-insert-state-map (kbd "jj") 'evil-force-normal-state)
+
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
