@@ -1,0 +1,10 @@
+* 说明
+这是我的 spacemacs 配置。
+
+1. 所有文件都应放在~/.spacemacs.d/下面。
+
+2. ~/.emacs.d/克隆的是 spacemacs 的 develop 分支。
+
+3. 操作系统是 linux：ubuntu 14.04
+
+4. 写了一个自己的 layer：ziyuan
