@@ -11,9 +11,6 @@
   (interactive)
   (persp-save-state-to-file (concat persp-save-dir "ziyuan")))
 
-(defun fcitxActive()
-  (fcitx--activate)
-  (remove-hook 'yas-after-exit-snippet-hook 'fcitxActive))
 
 ;; ;; http://blog.lojic.com/2009/08/06/send-growl-notifications-from-carbon-emacs-on-osx/
 ;; (defun ziyuan/growl-notification (title message &optional sticky)

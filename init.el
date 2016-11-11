@@ -59,7 +59,8 @@ values."
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(chinese-wbim
                                     chinese-pyim
-                                    vi-tilde-fringe)
+                                    vi-tilde-fringe
+                                    spaceline)
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
    ;; the list `dotspacemacs-configuration-layers'. (default t)
@@ -301,6 +302,15 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (add-to-list 'auto-mode-alist '("\\.asy$" . asy-mode))
 
     (defalias 'display-buffer-in-major-side-window 'window--make-major-side-window);;这是spacemacs的一个bug
+
+
+    (fcitx--defun-maybe "snippet")
+
+    (defun foo ()
+      (fcitx--snippet-maybe-activate)
+      (remove-hook 'yas-after-exit-snippet-hook 'foo))
+
+
     (setq yas-snippet-dirs (append '("/home/ziyuan/.spacemacs.d/snippets") yas-snippet-dirs))
     (setq-default yas--default-user-snippets-dir "/home/ziyuan/.spacemacs.d/snippets")
 
@@ -311,8 +321,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (define-key yas-minor-mode-map (kbd "TAB") nil)
     ;; Set Yasnippet's key binding to shift+tab
     (define-key yas-minor-mode-map (kbd "<backtab>") 'yas-expand)
-    ;; Alternatively use Control-c + tab
-    (define-key yas-minor-mode-map (kbd "\C-c TAB") 'yas-expand)
+    ;; Alternatively use Control-c + tab/ not fine with fcitx, change to f4
+    ;;(define-key yas-minor-mode-map (kbd "\C-c TAB") 'yas-expand)
+    (define-key yas-minor-mode-map (kbd "<f4>") 'yas-expand)
 
 
 

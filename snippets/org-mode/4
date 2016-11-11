@@ -2,4 +2,4 @@
 # name: equation in line
 # key: 4
 # --
- \$$1\$ $0
+`(progn (fcitx--snippet-maybe-deactivate) (add-hook 'yas-after-exit-snippet-hook 'foo) nil)`\$$1\$ $0
