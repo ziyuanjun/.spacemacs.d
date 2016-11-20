@@ -99,6 +99,42 @@
              chinese-char chinese-char-and-punc english-word
              (+ chinese-char english-word)))))
 
+(defun wcr ()
+  "「较精確地」统计中/日/英文字数。仅对选定区域"
+  (interactive)
+ (if (use-region-p)
+  (let ((start (region-beginning))
+        (end (region-end))
+        (chinese-char-and-punc 0)
+        (chinese-punc 0)
+        (english-word 0)
+        (chinese-char 0) 
+        )
+    (save-restriction
+      (narrow-to-region start end)
+
+    (goto-char start)
+    ;; 中文（含標點、片假名）
+    (while (re-search-forward wc-regexp-chinese-char-and-punc nil :no-error)
+      (setq chinese-char-and-punc (1+ chinese-char-and-punc)))
+    ;; 中文標點符號
+    (goto-char start)
+    (while (re-search-forward wc-regexp-chinese-punc nil :no-error)
+      (setq chinese-punc (1+ chinese-punc)))
+    ;; 英文字數（不含標點）
+    (goto-char start)
+    (while (re-search-forward wc-regexp-english-word nil :no-error)
+      (setq english-word (1+ english-word))))
+    (setq chinese-char (- chinese-char-and-punc chinese-punc))
+    (message
+     (format "中日文字數（不含標點）：%s
+中日文字數（包含標點）：%s
+英文字數（不含標點）：%s
+=======================
+中英文合計（不含標點）：%s"
+             chinese-char chinese-char-and-punc english-word
+             (+ chinese-char english-word)))
+)))
 
 
 ;; ;; http://blog.lojic.com/2009/08/06/send-growl-notifications-from-carbon-emacs-on-osx/
