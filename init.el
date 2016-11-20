@@ -55,6 +55,9 @@ values."
    dotspacemacs-additional-packages '(chinese-fonts-setup
                                       cal-china-x
                                       highlight-thing
+                                      color-theme
+                                      color-theme-buffer-local
+                                      load-theme-buffer-local
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(chinese-wbim
@@ -393,8 +396,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (spacemacs/set-leader-keys "oy" 'youdao-dictionary-search-at-point+)
 
   ;; j and k to behave like g j and g k
-  (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
-  (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
+  (define-key evil-normal-state-map (kbd ",j") 'next-line)
+  (define-key evil-normal-state-map (kbd ",k") 'previous-line)
   ;;中文输入退出到normal模式时，自动变为英文
   (require 'fcitx)
   ;;(package-initialize)

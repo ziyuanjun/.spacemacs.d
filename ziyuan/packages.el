@@ -117,9 +117,9 @@ Each entry is either:
 
 (defun ziyuan/post-init-org-pomodoro ()
   (progn
-    (add-hook 'org-pomodoro-finished-hook '("notify-send Break"))
-    ;;(add-hook 'org-pomodoro-short-break-finished-hook '(lambda () (ziyuan/growl-notification "Short Break" "🐝 Ready to Go?" t)))
-    ;;(add-hook 'org-pomodoro-long-break-finished-hook '(lambda () (ziyuan/growl-notification "Long Break" " 💪 Ready to Go?" t)))
+    (add-hook 'org-pomodoro-finished-hook 'ziyuan/break-Notify)
+    (add-hook 'org-pomodoro-short-break-finished-hook 'ziyuan/short-break-finish)
+    (add-hook 'org-pomodoro-long-break-finished-hook 'ziyuan/long-break-finish)
     ;;(setq org-timer-default-timer 2)
     ))
 
