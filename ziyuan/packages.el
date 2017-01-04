@@ -294,6 +294,13 @@ Each entry is either:
     ;; 用於加密的 GPG 金鑰
     ;; 可以設定任何 ID 或是設成 nil 來使用對稱式加密 (symmetric encryption)
     (setq org-crypt-key nil)
+
+
+    ;;org-mode 不使用[n]做下标
+    (setq org-footnote-definition-re "^\\[fn:[-_[:word:]]+\\]"
+          org-footnote-re            (concat "\\[\\(?:fn:\\([-_[:word:]]+\\)?:"
+                                             "\\|"
+                                             "\\(fn:[-_[:word:]]+\\)\\)"))
 )
 
 

@@ -28,7 +28,8 @@ values."
      auto-completion
      (chinese :variables
               chinese-enable-youdao-dict t
-              chinese-enable-fcitx t)
+              chinese-enable-fcitx t
+              pangu-spacing-real-insert-separtor nil)
      (better-defaults :variables better-defaults-move-to-end-of-code-first t)   ;;test
      emacs-lisp
      (spacemacs-layouts :variables layouts-enable-autosave nil
@@ -370,6 +371,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
                         (holiday-lunar 10 16 "老婆农历生日" 0)
                         (holiday-lunar 9 18 "某人农历生日" 0) ))
     (setq calendar-holidays my-holidays) ;只显示我定制的节假日
+    (setq calendar-mark-holidays-flag t) ;打开Calendar时默认高亮节日
 
     ;;python3
     ;;(setenv "PATH" "/home/ziyuan/anaconda3/bin:/usr/local/bin:/usr/bin:/bin:/bin/bash:/home/ziyuan/MySoft/pymacs")
