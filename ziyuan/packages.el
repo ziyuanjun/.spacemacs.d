@@ -43,7 +43,8 @@
                            :repo "codefalling/blog-admin"))
   ;;  anaconda-mode
     ;; (org-download :location (recipe :fetcher github :repo "abo-abo/org-download"))
-    (org :location built-in))
+    (org :location built-in)
+    )
   "The list of Lisp packages required by the ziyuan layer.
 
 Each entry is either: 
@@ -297,10 +298,10 @@ Each entry is either:
 
 
     ;;org-mode 不使用[n]做下标
-    (setq org-footnote-definition-re "^\\[fn:[-_[:word:]]+\\]"
-          org-footnote-re            (concat "\\[\\(?:fn:\\([-_[:word:]]+\\)?:"
-                                             "\\|"
-                                             "\\(fn:[-_[:word:]]+\\)\\)"))
+    ;;(setq org-footnote-definition-re "^\\[fn:[-_[:word:]]+\\]"
+     ;;     org-footnote-re            (concat "\\[\\(?:fn:\\([-_[:word:]]+\\)?:"
+      ;;                                       "\\|"
+       ;;                                      "\\(fn:[-_[:word:]]+\\)\\)"))
 )
 
 

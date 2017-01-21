@@ -28,8 +28,7 @@ values."
      auto-completion
      (chinese :variables
               chinese-enable-youdao-dict t
-              chinese-enable-fcitx t
-              pangu-spacing-real-insert-separtor nil)
+              chinese-enable-fcitx t)
      (better-defaults :variables better-defaults-move-to-end-of-code-first t)   ;;test
      emacs-lisp
      (spacemacs-layouts :variables layouts-enable-autosave nil
@@ -329,7 +328,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
     ;;(define-key yas-minor-mode-map (kbd "\C-c TAB") 'yas-expand)
     (define-key yas-minor-mode-map (kbd "<f4>") 'yas-expand)
 
-
+    (spacemacs|define-text-object "q" "quotation-mark" "“" "”");; csq"中文引号的快速替换
+    (spacemacs|define-text-object "b" "brackets-mark" "（" "）");; csb(中文括号的快速替换
 
     ;;模拟vim的n zz功能('*'高亮某个词后，'n'向下时高亮词移动到屏中部，'zz'也可单独使用 )
     (defadvice evil-search-next (after advice-for-evil-search-next activate)
