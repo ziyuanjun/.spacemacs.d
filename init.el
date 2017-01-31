@@ -58,10 +58,11 @@ values."
                                       color-theme
                                       color-theme-buffer-local
                                       load-theme-buffer-local
+                                      evil-find-char-pinyin
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(chinese-wbim
-                                    chinese-pyim
+                                    pangu-spacing
                                     vi-tilde-fringe
                                     spaceline)
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -328,8 +329,26 @@ before packages are loaded. If you are unsure, you should try in setting them in
     ;;(define-key yas-minor-mode-map (kbd "\C-c TAB") 'yas-expand)
     (define-key yas-minor-mode-map (kbd "<f4>") 'yas-expand)
 
-    (spacemacs|define-text-object "q" "quotation-mark" "“" "”");; csq"中文引号的快速替换
-    (spacemacs|define-text-object "b" "brackets-mark" "（" "）");; csb(中文括号的快速替换
+
+    (require 'chinese-pyim)
+    (require 'chinese-pyim-basedict) ; 拼音词库设置，五笔用户 *不需要* 此行设置
+    (chinese-pyim-basedict-enable)   ; 拼音词库，五笔用户 *不需要* 此行设置
+
+    (setq default-input-method "chinese-pyim")
+    (global-set-key (kbd "C-\\") 'toggle-input-method)
+    (global-set-key (kbd "M-f") 'pyim-forward-word)
+    (global-set-key (kbd "M-b") 'pyim-backward-word)
+    (evil-find-char-pinyin-mode +1)
+
+    (spacemacs|define-text-object "=" "equal-mark" "=" "=")
+    (spacemacs|define-text-object "q" "double-quotation-mark" "“" "”");; csm"中文引号的快速替换
+    (spacemacs|define-text-object "Q" "single-quotation-mark" "‘" "’");; csM'中文引号的快速替换
+    (spacemacs|define-text-object "r" "fullwidth-round-brackets" "（" "）");; csb(中文括号的快速替换
+    (spacemacs|define-text-object "s" "fullwidth-square-brackets" "[" "]");; csb(中文括号的快速替换
+    (spacemacs|define-text-object "l" "black-lenticular-brackets" "【" "】");; csb(中文括号的快速替换
+    (spacemacs|define-text-object "g" "double-guillemet" "《" "》");; csb(中文括号的快速替换
+    (spacemacs|define-text-object "G" "single-guillemet" "<" ">");; csb(中文括号的快速替换
+    (setq-default evil-surround-pairs-alist evil-surround-pairs-alist)
 
     ;;模拟vim的n zz功能('*'高亮某个词后，'n'向下时高亮词移动到屏中部，'zz'也可单独使用 )
     (defadvice evil-search-next (after advice-for-evil-search-next activate)
@@ -381,7 +400,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (setq exec-path (split-string (getenv "PATH") path-separator))
 
 
-    (setq-default dotspacemacs-themes '(monokai leuven solarized-dark))
+    (setq-default dotspacemacs-themes '(monokai solarized-dark leuven)) 
   (linum-relative-global-mode t)
   (setcdr evil-insert-state-map nil)
   (define-key evil-insert-state-map [escape] 'evil-normal-state)
