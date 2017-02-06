@@ -18,6 +18,8 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     yaml
+     html
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -129,10 +131,10 @@ values."
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    dotspacemacs-default-font '("Ubuntu Mono"
-                               :size 22
+                               :size 23
                                :weight normal
                                :width normal
-                               :powerline-scale 1.2)
+                               :powerline-scale 1.0)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The leader key accessible in `emacs state' and `insert state'
@@ -329,16 +331,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
     ;;(define-key yas-minor-mode-map (kbd "\C-c TAB") 'yas-expand)
     (define-key yas-minor-mode-map (kbd "<f4>") 'yas-expand)
 
-
-    (require 'chinese-pyim)
-    (require 'chinese-pyim-basedict) ; 拼音词库设置，五笔用户 *不需要* 此行设置
-    (chinese-pyim-basedict-enable)   ; 拼音词库，五笔用户 *不需要* 此行设置
-
-    (setq default-input-method "chinese-pyim")
-    (global-set-key (kbd "C-\\") 'toggle-input-method)
-    (global-set-key (kbd "M-f") 'pyim-forward-word)
-    (global-set-key (kbd "M-b") 'pyim-backward-word)
-    (evil-find-char-pinyin-mode +1)
+    (evil-find-char-pinyin-mode +1);; 让 f/F 支持中文拼音
 
     (spacemacs|define-text-object "=" "equal-mark" "=" "=")
     (spacemacs|define-text-object "q" "double-quotation-mark" "“" "”");; csm"中文引号的快速替换
@@ -357,7 +350,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
       (evil-scroll-line-to-center (line-number-at-pos)))
 
     ;;打开menu bar，有时能起到提示作用
-    (menu-bar-mode t)
+    (menu-bar-mode -1)
 
     (require 'chinese-fonts-setup)
     ;; 让 chinese-fonts-setup 随着 emacs 自动生效。
@@ -366,7 +359,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (cfs-set-spacemacs-fallback-fonts)
     (setq cfs-use-face-font-rescale t)
     
-    (set-fontset-font "fontset-default" 'unicode "WenQuanYi Bitmap Song 12") ;;for linux
+    (set-fontset-font "fontset-default" 'unicode "WenQuanYi Bitmap Song 10") ;;for linux
 
     (add-to-list 'load-path "~/.emacs.d/elpa/cal-china-x-20160102.124") 
     (require 'cal-china-x)
@@ -396,8 +389,11 @@ before packages are loaded. If you are unsure, you should try in setting them in
     ;;(setenv "PATH" "/home/ziyuan/anaconda3/bin:/usr/local/bin:/usr/bin:/bin:/bin/bash:/home/ziyuan/MySoft/pymacs")
 
     ;;python2
-    (setenv "PATH" "/home/ziyuan/anaconda2/bin:/usr/local/bin:/usr/bin:/bin:/bin/bash:/home/ziyuan/MySoft/emacs/lib-src")
-    (setq exec-path (split-string (getenv "PATH") path-separator))
+    ;;(setenv "PATH" "/home/ziyuan/anaconda2/bin:/usr/local/bin:/usr/bin:/bin:/bin/bash")
+    ;;(setq exec-path (split-string (getenv "PATH") path-separator))
+    (let ((my-path "/home/ziyuan/anaconda2/bin"))
+      (setenv "PATH" (concat my-path ":" (getenv "PATH"))) ; Assume ":" is the separator
+      (add-to-list 'exec-path my-path))
 
 
     (setq-default dotspacemacs-themes '(monokai solarized-dark leuven)) 
