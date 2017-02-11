@@ -12,3 +12,6 @@
 (spacemacs/set-leader-keys "ols" 'ziyuan/save-my-layout)
 
 
+(global-set-key (kbd "C-c s c") 'my-org-screenshot)
+
+
