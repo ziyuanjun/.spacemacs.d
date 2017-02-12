@@ -48,6 +48,9 @@
  '(nrepl-message-colors
    (quote
     ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
+ '(org-agenda-files
+   (quote
+    ("~/Nutstore/gtd/mygtd.org" "~/Nutstore/gtd/yjy.org" "~/Nutstore/gtd/notes.org" "~/Nutstore/gtd/mobile.org")))
  '(org-log-into-drawer t)
  '(org-timer-default-timer 2)
  '(package-selected-packages
@@ -55,6 +58,11 @@
     (yaml-mode web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data pytest py-isort monokai-theme evil-find-char-pinyin chinese-pyim-greatdict stickyfunc-enhance srefactor helm-gtags helm-cscope xcscope ggtags emoji-cheat-sheet-plus company-emoji load-theme-buffer-local color-theme color-theme-buffer-local pandoc-mode ox-pandoc ht org undo-tree yapfify pyenv-mode pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda highlight-thing cal-china-x chinese-fonts-setup elpy pyvenv find-file-in-project csharp-mode blog-admin ctable zenburn-theme solarized-theme names chinese-word-at-point youdao-dictionary pangu-spacing find-by-pinyin-dired chinese-pyim chinese-pyim-basedict ace-pinyin pinyinlib ace-jump-mode wgrep smex ivy-hydra flyspell-correct-ivy counsel-projectile counsel swiper uuidgen org-projectile org-download mwim link-hint git-link flyspell-correct-helm flyspell-correct eyebrowse evil-visual-mark-mode evil-unimpaired evil-ediff column-enforce-mode auctex anaconda-mode pythonic org-ref key-chord ivy helm-bibtex biblio f parsebib biblio-core fcitx mmm-mode markdown-toc markdown-mode helm-flyspell gh-md flycheck-pos-tip flycheck auto-dictionary paradox hydra org-plus-contrib company-statistics adaptive-wrap toc-org smeargle orgit org-repo-todo org-present org-pomodoro alert log4e gntp org-bullets magit-gitflow htmlize helm-gitignore request helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger evil-magit magit magit-popup git-commit with-editor company-quickhelp pos-tip company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler window-numbering volatile-highlights vi-tilde-fringe spaceline s powerline smooth-scrolling restart-emacs rainbow-delimiters popwin persp-mode pcre2el spinner page-break-lines open-junk-file neotree move-text macrostep lorem-ipsum linum-relative leuven-theme info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-args evil-anzu anzu eval-sexp-fu highlight elisp-slime-nav define-word clean-aindent-mode buffer-move bracketed-paste auto-highlight-symbol auto-compile packed dash aggressive-indent ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build use-package which-key bind-key bind-map evil spacemacs-theme)))
  '(pos-tip-background-color "#A6E22E")
  '(pos-tip-foreground-color "#272822")
+ '(safe-local-variable-values
+   (quote
+    ((eval setq org-download-image-dir
+           (file-name-sans-extension
+            (buffer-name))))))
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#eee8d5" 0.2))
  '(term-default-bg-color "#fdf6e3")
  '(term-default-fg-color "#657b83")
