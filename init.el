@@ -389,14 +389,15 @@ before packages are loaded. If you are unsure, you should try in setting them in
         (interactive)
         (pyim-convert-code-at-point)
         ;;光标所在处至文件尾的剩余字符个数
-        (setq pointleft-at-insert (- (point-max) (point)))
-        ;;删除一个可能存在的空格
-        (backward-word)
-        (if toggle-chinese-pyim-no-space
-            (if (eq 32 (char-before (point)))
-                  (delete-char -1)))
-        ;;恢复光标位置
-        (goto-char (- (point-max) pointleft-at-insert)))
+        (let (pointleft-at-insert)
+          (setq pointleft-at-insert (- (point-max) (point)))
+          ;;删除一个可能存在的空格
+          (backward-word)
+          (if toggle-chinese-pyim-no-space
+              (if (eq 32 (char-before (point)))
+                    (delete-char -1)))
+          ;;恢复光标位置
+          (goto-char (- (point-max) pointleft-at-insert))))
       (global-set-key (kbd "M-j") 'ziyuan/pyim-convert-code-at-point);与 pyim-probe-dynamic-english 配合
 
 
