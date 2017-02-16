@@ -8,7 +8,7 @@
  '(ansi-color-names-vector
    ["#272822" "#F92672" "#A6E22E" "#E6DB74" "#66D9EF" "#FD5FF0" "#A1EFE4" "#F8F8F2"])
  '(cfs--current-profile "profile1" t)
- '(cfs--profiles-steps (quote (("profile1" . 6))) t)
+ '(cfs--profiles-steps (quote (("profile1" . 10))) t)
  '(company-idle-delay 0.15)
  '(compilation-message-face (quote default))
  '(cua-global-mark-cursor-color "#2aa198")

@@ -166,7 +166,6 @@ same directory as the org-buffer and insert a link to this file."
              (+ chinese-char english-word)))
 )))
 
-
 ;; ;; http://blog.lojic.com/2009/08/06/send-growl-notifications-from-carbon-emacs-on-osx/
 ;; (defun ziyuan/growl-notification (title message &optional sticky)
 ;;   "Send a Growl notification"

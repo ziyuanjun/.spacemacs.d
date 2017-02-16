@@ -25,8 +25,8 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ivy
      helm
+     ivy
      auto-completion
      (chinese :variables
               chinese-enable-youdao-dict t
@@ -382,9 +382,25 @@ before packages are loaded. If you are unsure, you should try in setting them in
       (add-hook 'emacs-startup-hook
                 #'(lambda () (pyim-restart-1 t)))
       (global-set-key (kbd "C-\\") 'toggle-input-method)
-      (global-set-key (kbd "M-j") 'pyim-convert-code-at-point);与 pyim-probe-dynamic-english 配合
+
+      ;;将英文转为汉字时删除空格。相关的讨论：https://github.com/tumashu/chinese-pyim/issues/139
+      (setq toggle-chinese-pyim-no-space t)
+      (defun ziyuan/pyim-convert-code-at-point()
+        (interactive)
+        (pyim-convert-code-at-point)
+        ;;光标所在处至文件尾的剩余字符个数
+        (setq pointleft-at-insert (- (point-max) (point)))
+        ;;删除一个可能存在的空格
+        (backward-word)
+        (if toggle-chinese-pyim-no-space
+            (if (eq 32 (char-before (point)))
+                  (delete-char -1)))
+        ;;恢复光标位置
+        (goto-char (- (point-max) pointleft-at-insert)))
+      (global-set-key (kbd "M-j") 'ziyuan/pyim-convert-code-at-point);与 pyim-probe-dynamic-english 配合
 
 
+      (global-set-key (kbd "C-s") 'helm-swoop)
 
     (spacemacs|define-text-object "=" "equal-mark" "=" "=")
     (spacemacs|define-text-object "q" "double-quotation-mark" "“" "”");; csm"中文引号的快速替换
@@ -412,7 +428,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (cfs-set-spacemacs-fallback-fonts)
     (setq cfs-use-face-font-rescale t)
     
-    (set-fontset-font "fontset-default" 'unicode "WenQuanYi Bitmap Song 10") ;;for linux
+    (set-fontset-font "fontset-default" 'unicode "WenQuanYi Bitmap Song 12") ;;for linux
 
     (add-to-list 'load-path "~/.emacs.d/elpa/cal-china-x-20160102.124") 
     (require 'cal-china-x)
