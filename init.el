@@ -503,6 +503,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq-default evil-escape-key-sequence "fd")
  ;;(define-key evil-insert-state-map (kbd "jj") 'evil-force-normal-state)
 
+  ;;如果后面紧跟着字符就不补后号
+  (sp-pair "(" nil :unless '(sp-point-before-word-p))
+  (sp-pair "{" nil :unless '(sp-point-before-word-p))
+
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
