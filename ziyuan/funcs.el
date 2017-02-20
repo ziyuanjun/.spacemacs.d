@@ -3,6 +3,14 @@
   (interactive)
   (find-file "~/.spacemacs.d/ziyuan/packages.el"))
 
+;;使用文件浏览器打开文件所在目录参考：https://emacs-china.org/t/spacemacs-finder/2183/14
+(defun browse-file-directory ()
+  "Open the current file's directory however the OS would."
+  (interactive)
+  (if default-directory
+      (browse-url-of-file (expand-file-name default-directory))
+    (error "No `default-directory' to open")))
+
 (defun ziyuan/load-my-layout ()
   (interactive)
   (persp-load-state-from-file (concat persp-save-dir "ziyuan")))
