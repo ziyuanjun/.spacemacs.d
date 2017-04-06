@@ -8,6 +8,15 @@
 3. 操作系统是 linux (ubuntu 16.04)
 
 4. 写了一个自己的 layer：ziyuan.
+
    spacemacs的更新日期2017-04-06, master分支。
+
    新的spacemacs需要把layer放在.spacemacs.d/layers下面
 
+   新的spacemacs同时使用ivy和helm会报warning
+
+5. 必要的配置
+   - pandoc:
+   #+BEGIN_SRC sh
+   sudo apt-get install pandoc
+   #+END_SRC
