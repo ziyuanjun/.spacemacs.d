@@ -26,7 +26,7 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      helm
-     ivy
+     ;;ivy
      auto-completion
      (chinese :variables
               chinese-enable-youdao-dict t
@@ -121,9 +121,9 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(monokai
-                         solarized-dark
+   dotspacemacs-themes '(solarized-dark
                          solarized-light
+                         monokai
                          spacemacs-dark
                          spacemacs-light
                          leuven
@@ -477,8 +477,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
                                                             chinese-enable-fcitx t)))
   (setq-default dotspacemacs-configuration-layers '((chinese :variables
                                                             chinese-enable-youdao-dict t)))
-  (setq org-format-latex-options
-        (plist-put org-format-latex-options :scale 2.0))      ;调整 LaTeX 预览图片的大小
+  ;; (setq org-format-latex-options
+  ;;       (plist-put org-format-latex-options :scale 2.0))      ;调整 LaTeX 预览图片的大小
 
   (spacemacs/set-leader-keys "oy" 'youdao-dictionary-search-at-point+)
 

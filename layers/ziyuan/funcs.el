@@ -1,7 +1,7 @@
 ;; 快速打开配置文件
 (defun open-init-file()
   (interactive)
-  (find-file "~/.spacemacs.d/ziyuan/packages.el"))
+  (find-file "~/.spacemacs.d/layers/ziyuan/packages.el"))
 
 ;;使用文件浏览器打开文件所在目录参考：https://emacs-china.org/t/spacemacs-finder/2183/14
 (defun browse-file-directory ()
