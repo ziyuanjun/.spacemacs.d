@@ -342,7 +342,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (define-key yas-minor-mode-map (kbd "<backtab>") 'yas-expand)
     ;; Alternatively use Control-c + tab/ not fine with fcitx, change to f4
     ;;(define-key yas-minor-mode-map (kbd "\C-c TAB") 'yas-expand)
-    (define-key yas-minor-mode-map (kbd "<f4>") 'yas-expand)
+    (define-key yas-minor-mode-map (kbd "<f6>") 'yas-expand)
 
     (evil-find-char-pinyin-mode +1);; 让 f/F 支持中文拼音
 
@@ -382,6 +382,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
       (add-hook 'emacs-startup-hook
                 #'(lambda () (pyim-restart-1 t)))
       (global-set-key (kbd "C-\\") 'toggle-input-method)
+
+      
 
       ;;将英文转为汉字时删除空格。相关的讨论：https://github.com/tumashu/chinese-pyim/issues/139
       (setq toggle-chinese-pyim-no-space t)
