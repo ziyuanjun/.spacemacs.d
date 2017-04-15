@@ -350,8 +350,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (require 'chinese-pyim)
     (require 'chinese-pyim-basedict)
     (chinese-pyim-basedict-enable)
-    (require 'chinese-pyim-greatdict)
-    (chinese-pyim-greatdict-enable)
+    ;; (require 'chinese-pyim-greatdict)
+    ;; (chinese-pyim-greatdict-enable)
     (setq default-input-method "chinese-pyim") 
     (setq pyim-default-scheme 'quanpin)
       ;; 设置 pyim 探针设置，这是 pyim 高级功能设置，可以实现 *无痛* 中英文切换 :-)
@@ -383,8 +383,14 @@ before packages are loaded. If you are unsure, you should try in setting them in
                 #'(lambda () (pyim-restart-1 t)))
       (global-set-key (kbd "C-\\") 'toggle-input-method)
 
-      
+      (require 'google-translate)
+      (setq google-translate-base-url "http://translate.google.cn/translate_a/single")
+      (setq google-translate-listen-url "http://translate.google.cn/translate_tts")
+      (setq google-translate--tkk-url "http://translate.google.cn/")
+      (global-set-key "\C-ct" 'google-translate-smooth-translate)
+      (setq google-translate-translation-directions-alist '(("en" . "zh-CN")))
 
+      
       ;;将英文转为汉字时删除空格。相关的讨论：https://github.com/tumashu/chinese-pyim/issues/139
       (setq toggle-chinese-pyim-no-space t)
       (defun ziyuan/pyim-convert-code-at-point()
@@ -463,9 +469,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
     ;;python2
     ;;(setenv "PATH" "/home/ziyuan/anaconda2/bin:/usr/local/bin:/usr/bin:/bin:/bin/bash")
     ;;(setq exec-path (split-string (getenv "PATH") path-separator))
-    (let ((my-path "/home/ziyuan/anaconda2/bin"))
-      (setenv "PATH" (concat my-path ":" (getenv "PATH"))) ; Assume ":" is the separator
-      (add-to-list 'exec-path my-path))
+    ;; (let ((my-path "/home/ziyuan/anaconda2/bin"))
+    ;;   (setenv "PATH" (concat my-path ":" (getenv "PATH"))) ; Assume ":" is the separator
+    ;;   (add-to-list 'exec-path my-path))
 
 
     (setq-default dotspacemacs-themes '(monokai solarized-dark leuven)) 

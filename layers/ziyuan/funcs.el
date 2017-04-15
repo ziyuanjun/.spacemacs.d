@@ -3,6 +3,20 @@
   (interactive)
   (find-file "~/.spacemacs.d/layers/ziyuan/packages.el"))
 
+;;设置pyim-convert-code-at-point调用时是否删除中英文之间的空格
+(defun ziyuan/toggle-chinese-pyim-convert-no-space()
+  (interactive)
+  (if toggle-chinese-pyim-no-space
+      (progn
+        (setq toggle-chinese-pyim-no-space nil)
+        (message "M-j 英->中 不删空格")
+        )
+    (progn
+      (setq toggle-chinese-pyim-no-space t)
+      (message "M-j 英->中 删空格")
+      )
+    ))
+
 ;;使用文件浏览器打开文件所在目录参考：https://emacs-china.org/t/spacemacs-finder/2183/14
 (defun browse-file-directory ()
   "Open the current file's directory however the OS would."
