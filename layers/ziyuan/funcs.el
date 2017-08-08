@@ -25,6 +25,16 @@
       (browse-url-of-file (expand-file-name default-directory))
     (error "No `default-directory' to open")))
 
+;;org mode 中选择一段代码，未其加入#+BEGIN_SRC xx 和 #+END_SRC
+(defun org-format-region-as-code-block (beg end)
+  (interactive "*r")
+  (let ((lang (read-string "Language: "))
+        (code (delete-and-extract-region beg end)))
+    (insert "#+BEGIN_SRC " lang "\n"
+            code (if (string-suffix-p "\n" code) "" "\n")
+            "#+END_SRC\n")))
+
+
 (defun ziyuan/load-my-layout ()
   (interactive)
   (persp-load-state-from-file (concat persp-save-dir "ziyuan")))

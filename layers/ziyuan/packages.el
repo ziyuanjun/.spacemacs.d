@@ -320,11 +320,11 @@ Each entry is either:
 
 
 (defun ziyuan/post-init-org-ref()
-  (setq reftex-default-bibliography '("~/Refrences/bibliography/refs.bib"))
+  (setq reftex-default-bibliography '("~/References/bibliography/refs.bib"))
   ;; see org-ref for use of these variables
-  (setq org-ref-bibliography-notes "~/Refrences/bibliography/notes.org"
-        org-ref-default-bibliography '("~/Refrences/bibliography/refs.bib")
-        org-ref-pdf-directory "~/Refrences/bibliography/bibtex-pdfs/")
+  (setq org-ref-bibliography-notes "~/References/bibliography/notes.org"
+        org-ref-default-bibliography '("~/References/bibliography/refs.bib")
+        org-ref-pdf-directory "~/References/bibliography/bibtex-pdfs/")
   )
 
 (defun ziyuan/post-init-company()

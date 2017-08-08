@@ -18,6 +18,7 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     javascript
      yaml
      html
      ;; ----------------------------------------------------------------
@@ -121,12 +122,12 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(solarized-dark
+   dotspacemacs-themes '(leuven
+                         solarized-dark
                          solarized-light
                          monokai
                          spacemacs-dark
                          spacemacs-light
-                         leuven
                          zenburn)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
@@ -473,6 +474,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
     ;;   (setenv "PATH" (concat my-path ":" (getenv "PATH"))) ; Assume ":" is the separator
     ;;   (add-to-list 'exec-path my-path))
 
+    (let ((my-path "/usr/local/texlive/2016/bin/x86_64-linux"))
+       (setenv "PATH" (concat my-path ":" (getenv "PATH"))) ; Assume ":" is the separator
+       (add-to-list 'exec-path my-path))
 
     (setq-default dotspacemacs-themes '(monokai solarized-dark leuven)) 
   (linum-relative-global-mode t)
@@ -485,8 +489,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
                                                             chinese-enable-fcitx t)))
   (setq-default dotspacemacs-configuration-layers '((chinese :variables
                                                             chinese-enable-youdao-dict t)))
-  ;; (setq org-format-latex-options
-  ;;       (plist-put org-format-latex-options :scale 2.0))      ;调整 LaTeX 预览图片的大小
+  (setq org-format-latex-options
+        (plist-put org-format-latex-options :scale 2.0))      ;调整 LaTeX 预览图片的大小
 
   (spacemacs/set-leader-keys "oy" 'youdao-dictionary-search-at-point+)
 
@@ -514,6 +518,41 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;;如果后面紧跟着字符就不补后号
   (sp-pair "(" nil :unless '(sp-point-before-word-p))
   (sp-pair "{" nil :unless '(sp-point-before-word-p))
+
+
+
+;; 定义 org-mode-reftex-search
+(defun org-mode-reftex-search ()
+ ;; jump to the notes for the paper pointed to at from reftex search
+ (interactive)
+ (org-open-link-from-string (format "[[notes:%s]]" (reftex-citation t))))
+
+(setq org-link-abbrev-alist
+ '(("bib" . "~/References/ref.bib::%s")
+   ("notes" . "~/References/org/notes.org::#%s")
+   ("papers" . "~/References/papers/%s.pdf")))
+   
+;; 当使用 org-mode 时，自动调 RefTeX
+(defun org-mode-reftex-setup ()
+  (load-library "reftex")
+  (and (buffer-file-name) (file-exists-p (buffer-file-name))
+       (progn
+    ;; enable auto-revert-mode to update reftex when bibtex file changes on disk
+    (global-auto-revert-mode t)
+    (reftex-parse-all)
+    ;; add a custom reftex cite format to insert links
+    (reftex-set-cite-format
+      '((?b . "[[bib:%l][%l-bib]]")
+        (?c . "\\cite{%l}")
+        (?n . "[[notes:%l][%l-notes]]")
+        (?p . "[[papers:%l][%l-paper]]")
+        (?t . "%t")
+        (?h . "** %t\n:PROPERTIES:\n:Custom_ID: %l\n:END:\n[[papers:%l][%l-paper]]")))))
+  (define-key org-mode-map (kbd "C-c )") 'reftex-citation)
+  ;; binding of  ”C-c (” to org-mode-reftex-search
+  (define-key org-mode-map (kbd "C-c (") 'org-mode-reftex-search))
+
+(add-hook 'org-mode-hook 'org-mode-reftex-setup)
 
 )
 

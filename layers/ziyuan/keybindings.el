@@ -16,4 +16,5 @@
 
 (global-set-key (kbd "C-c s c") 'my-org-screenshot)
 
+(global-set-key (kbd "C-c s s") 'org-format-region-as-code-block)
 
