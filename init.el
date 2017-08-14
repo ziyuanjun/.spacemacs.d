@@ -58,6 +58,7 @@ values."
    dotspacemacs-additional-packages '(chinese-fonts-setup
                                      ;; chinese-pyim
                                       chinese-pyim-greatdict
+                                      helm-purpose
                                       cal-china-x
                                       highlight-thing
                                       color-theme
@@ -313,7 +314,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
     ;; (setq highlight-thing-limit-to-defun t)
     ;; (setq highlight-thing-case-sensitive-p t)   
 
-
+    (helm-purpose-setup)
 
     (add-to-list 'load-path "/usr/local/share/asymptote")
     (autoload 'asy-mode "asy-mode.el" "Asymptote major mode." t)
