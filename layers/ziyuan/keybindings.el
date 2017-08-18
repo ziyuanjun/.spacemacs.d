@@ -18,3 +18,7 @@
 
 (global-set-key (kbd "C-c s s") 'org-format-region-as-code-block)
 
+(evil-leader/set-key
+  "ft" 'sr-speedbar-toggle)
+
+(global-set-key (kbd "M-x") 'helm-M-x)

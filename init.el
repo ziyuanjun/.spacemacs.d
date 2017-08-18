@@ -26,8 +26,8 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
+     ivy
      helm
-     ;;ivy
      auto-completion
      (chinese :variables
               chinese-enable-youdao-dict t
@@ -40,6 +40,11 @@ values."
      markdown
      org
      pandoc
+     semantic
+     cscope
+     ;;ycmd
+     (c-c++ :variables
+            c-c++-default-mode-for-headers 'c-mode)
     (python :variables
          python-test-runner '(nose pytest))
      ;;htmlize
@@ -58,13 +63,16 @@ values."
    dotspacemacs-additional-packages '(chinese-fonts-setup
                                      ;; chinese-pyim
                                       chinese-pyim-greatdict
-                                      helm-purpose
+                                      ;; helm-purpose
+                                      helm-gtags
                                       cal-china-x
                                       highlight-thing
                                       color-theme
                                       color-theme-buffer-local
                                       load-theme-buffer-local
                                       evil-find-char-pinyin
+                                      sr-speedbar
+                                      function-args
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(chinese-wbim
@@ -314,7 +322,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
     ;; (setq highlight-thing-limit-to-defun t)
     ;; (setq highlight-thing-case-sensitive-p t)   
 
-    (helm-purpose-setup)
+    ;; (helm-purpose-setup)
 
     (add-to-list 'load-path "/usr/local/share/asymptote")
     (autoload 'asy-mode "asy-mode.el" "Asymptote major mode." t)
@@ -394,7 +402,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
       
       ;;将英文转为汉字时删除空格。相关的讨论：https://github.com/tumashu/chinese-pyim/issues/139
-      (setq toggle-chinese-pyim-no-space t)
+      (setq toggle-chinese-pyim-no-space nil) ;;默认不删空格
       (defun ziyuan/pyim-convert-code-at-point()
         (interactive)
         (pyim-convert-code-at-point)
@@ -554,6 +562,31 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (define-key org-mode-map (kbd "C-c (") 'org-mode-reftex-search))
 
 (add-hook 'org-mode-hook 'org-mode-reftex-setup)
+
+(fa-config-default)
+(setq
+ helm-gtags-ignore-case t
+ helm-gtags-auto-update t
+ helm-gtags-use-input-at-cursor t
+ helm-gtags-pulse-at-cursor t
+ helm-gtags-prefix-key "\C-cg"
+ helm-gtags-suggested-key-mapping t
+ )
+
+(require 'helm-gtags)
+;; Enable helm-gtags-mode
+(add-hook 'dired-mode-hook 'helm-gtags-mode)
+(add-hook 'eshell-mode-hook 'helm-gtags-mode)
+(add-hook 'c-mode-hook 'helm-gtags-mode)
+(add-hook 'c++-mode-hook 'helm-gtags-mode)
+(add-hook 'asm-mode-hook 'helm-gtags-mode)
+
+(define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
+(define-key helm-gtags-mode-map (kbd "C-j") 'helm-gtags-select)
+(define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim)
+(define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
+(define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
+(define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)
 
 )
 
