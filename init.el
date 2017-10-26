@@ -73,6 +73,7 @@ values."
                                       evil-find-char-pinyin
                                       sr-speedbar
                                       function-args
+                                      py-autopep8
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(chinese-wbim
@@ -569,9 +570,15 @@ before packages are loaded. If you are unsure, you should try in setting them in
  helm-gtags-auto-update t
  helm-gtags-use-input-at-cursor t
  helm-gtags-pulse-at-cursor t
- helm-gtags-prefix-key "\C-cg"
+ helm-gtags-prefix-key "C-,"
  helm-gtags-suggested-key-mapping t
  )
+
+
+
+;; enable autopep8 formatting on save
+(require 'py-autopep8)
+(add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
 
 (require 'helm-gtags)
 ;; Enable helm-gtags-mode
@@ -580,6 +587,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 (add-hook 'c-mode-hook 'helm-gtags-mode)
 (add-hook 'c++-mode-hook 'helm-gtags-mode)
 (add-hook 'asm-mode-hook 'helm-gtags-mode)
+(add-hook 'python-mode-hook 'helm-gtags-mode)
 
 (define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
 (define-key helm-gtags-mode-map (kbd "C-j") 'helm-gtags-select)
@@ -587,6 +595,74 @@ before packages are loaded. If you are unsure, you should try in setting them in
 (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
 (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
 (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)
+
+;;; * Enable pdf and eps images in org-mode
+;; Suggested on the org-mode maillist by Julian Burgos
+(add-to-list 'image-file-name-extensions "pdf")
+(add-to-list 'image-file-name-extensions "eps")
+(add-to-list 'image-type-file-name-regexps '("\\.eps\\'" . imagemagick))
+(add-to-list 'image-file-name-extensions "eps")
+(add-to-list 'image-type-file-name-regexps '("\\.pdf\\'" . imagemagick))
+(add-to-list 'image-file-name-extensions "pdf")
+
+;; (setq image-file-name-extensions
+;;    (quote
+;;     ("png" "jpeg" "jpg" "gif" "tiff" "tif" "xbm" "xpm" "pbm" "pgm" "ppm" "pnm" "svg" "pdf" "bmp")))
+
+(setq org-imagemagick-display-command "convert -density 600 \"%s\" -thumbnail \"%sx%s>\" \"%s\"")
+
+(defun org-display-inline-images (&optional include-linked refresh beg end)
+  "Display inline images.
+Normally only links without a description part are inlined, because this
+is how it will work for export.  When INCLUDE-LINKED is set, also links
+with a description part will be inlined.  This
+can be nice for a quick
+look at those images, but it does not reflect what exported files will look
+like.
+When REFRESH is set, refresh existing images between BEG and END.
+This will create new image displays only if necessary.
+BEG and END default to the buffer boundaries."
+  (interactive "P")
+  (unless refresh
+    (org-remove-inline-images)
+    (if (fboundp 'clear-image-cache) (clear-image-cache)))
+  (save-excursion
+    (save-restriction
+      (widen)
+      (setq beg (or beg (point-min)) end (or end (point-max)))
+      (goto-char beg)
+      (let ((re (concat "\\[\\[\\(\\(file:\\)\\|\\([./~]\\)\\)\\([^]\n]+?"
+                        (substring (org-image-file-name-regexp) 0 -2)
+                        "\\)\\]" (if include-linked "" "\\]")))
+            old file ov img)
+        (while (re-search-forward re end t)
+          (setq old (get-char-property-and-overlay (match-beginning 1)
+                                                   'org-image-overlay)
+        file (expand-file-name
+                      (concat (or (match-string 3) "") (match-string 4))))
+          (when (file-exists-p file)
+            (let ((file-thumb (format "%s%s_thumb.png" (file-name-directory file) (file-name-base file))))
+              (if (file-exists-p file-thumb)
+                  (let ((thumb-time (nth 5 (file-attributes file-thumb 'string)))
+                        (file-time (nth 5 (file-attributes file 'string))))
+                    (if (time-less-p thumb-time file-time)
+            (shell-command (format org-imagemagick-display-command
+                           file org-image-actual-width org-image-actual-width file-thumb) nil nil)))
+                (shell-command (format org-imagemagick-display-command
+                                         file org-image-actual-width org-image-actual-width file-thumb) nil nil))
+              (if (and (car-safe old) refresh)
+                  (image-refresh (overlay-get (cdr old) 'display))
+                (setq img (save-match-data (create-image file-thumb)))
+                (when img
+                  (setq ov (make-overlay (match-beginning 0) (match-end 0)))
+                  (overlay-put ov 'display img)
+                  (overlay-put ov 'face 'default)
+                  (overlay-put ov 'org-image-overlay t)
+                  (overlay-put ov 'modification-hooks
+                               (list 'org-display-inline-remove-overlay))
+                  (push ov org-inline-image-overlays))))))))))
+
+
 
 )
 
