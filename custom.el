@@ -8,7 +8,7 @@
  '(ansi-color-names-vector
    ["#272822" "#F92672" "#A6E22E" "#E6DB74" "#66D9EF" "#FD5FF0" "#A1EFE4" "#F8F8F2"])
  '(cfs--current-profile "profile1" t)
- '(cfs--profiles-steps (quote (("profile1" . 4))) t)
+ '(cfs--profiles-steps (quote (("profile1" . 7))) t)
  '(company-idle-delay 0.15)
  '(compilation-message-face (quote default))
  '(cua-global-mark-cursor-color "#2aa198")
@@ -20,7 +20,7 @@
     ("fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" default)))
  '(evil-want-Y-yank-to-eol t)
  '(exec-path-from-shell-arguments (quote ("-l")))
- '(fci-rule-color "#49483E")
+ '(fci-rule-color "#49483E" t)
  '(google-translate-default-target-language "zh-CN")
  '(google-translate-output-destination (quote line-below))
  '(helm-gtags-prefix-key "C-,")
@@ -137,5 +137,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(default ((t (:family "Ubuntu Mono" :foundry "DAMA" :slant normal :weight normal :height 173 :width normal))))
  '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
  '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))

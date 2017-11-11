@@ -341,11 +341,15 @@ Each entry is either:
 (defun ziyuan/post-init-org-bullets()
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
   (add-hook 'org-mode-hook 'turn-on-visual-line-mode)
-  (setq-default org-bullets-bullet-list '("⓪" "①" "②" "③"
-                                          "④" "⑤" "⑥" "⑦"
-                                          "⑧" "⑨" "⑩" "⑪"
-                                          "⑫" "⑬" "⑭"
-                                          "⑮" "⑯" "⑰"
-                                          "⑱" "⑲" "⑳"))
-  )
+  ;;(setq org-bullets-bullet-list '("◉" "○" "●" ":arrow_forward:"))
+  (setq org-bullets-bullet-list '("➽" "➼" "➸" "➻" "➺" "➳" "➵"))
+  ;; ref to https://zhangda.wordpress.com/2016/02/15/configurations-for-beautifying-emacs-org-mode/
+        ;;'("◉" "◎" "⚫" "○" "◇" "►"))
+  ;; (setq-default org-bullets-bullet-list '("⓪" "①" "②" "③"
+  ;;                                         "④" "⑤" "⑥" "⑦"
+  ;;                                         "⑧" "⑨" "⑩" "⑪"
+  ;;                                         "⑫" "⑬" "⑭"
+  ;;                                         "⑮" "⑯" "⑰"
+  ;;                                         "⑱" "⑲" "⑳"))
+)
 
