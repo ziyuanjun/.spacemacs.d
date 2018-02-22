@@ -17,7 +17,8 @@ values."
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
-   '(
+   '(nginx
+     sql
      javascript
      yaml
      html
@@ -60,9 +61,9 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(chinese-fonts-setup
-                                     ;; chinese-pyim
-                                      chinese-pyim-greatdict
+   dotspacemacs-additional-packages '(
+                                      pyim
+                                      cnfonts
                                       ;; helm-purpose
                                       helm-gtags
                                       cal-china-x
@@ -75,8 +76,7 @@ values."
                                       function-args
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
-   dotspacemacs-excluded-packages '(chinese-wbim
-                                    pangu-spacing
+   dotspacemacs-excluded-packages '(pangu-spacing
                                     vi-tilde-fringe
                                     spaceline)
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -340,8 +340,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
       (remove-hook 'yas-after-exit-snippet-hook 'foo))
 
 
-    (setq yas-snippet-dirs (append '("/home/ziyuan/.spacemacs.d/snippets") yas-snippet-dirs))
-    (setq-default yas--default-user-snippets-dir "/home/ziyuan/.spacemacs.d/snippets")
+    (setq yas-snippet-dirs (append '("/home/zy/.spacemacs.d/snippets") yas-snippet-dirs))
+    (setq-default yas--default-user-snippets-dir "/home/zy/.spacemacs.d/snippets")
 
     (require 'yasnippet)
     (yas-global-mode 1)
@@ -357,12 +357,12 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (evil-find-char-pinyin-mode +1);; 让 f/F 支持中文拼音
 
 
-    (require 'chinese-pyim)
-    (require 'chinese-pyim-basedict)
-    (chinese-pyim-basedict-enable)
+    (require 'pyim)
+    (require 'pyim-basedict)
+    (pyim-basedict-enable)
     ;; (require 'chinese-pyim-greatdict)
     ;; (chinese-pyim-greatdict-enable)
-    (setq default-input-method "chinese-pyim") 
+    (setq default-input-method "pyim") 
     (setq pyim-default-scheme 'quanpin)
       ;; 设置 pyim 探针设置，这是 pyim 高级功能设置，可以实现 *无痛* 中英文切换 :-)
       ;; 我自己使用的中英文动态切换规则是：
@@ -440,12 +440,12 @@ before packages are loaded. If you are unsure, you should try in setting them in
     ;;打开menu bar，有时能起到提示作用
     (menu-bar-mode -1)
 
-    (require 'chinese-fonts-setup)
+    (require 'cnfonts)
     ;; 让 chinese-fonts-setup 随着 emacs 自动生效。
-    (chinese-fonts-setup-enable)
+    (cnfonts-enable)
     ;; 让 spacemacs mode-line 中的 Unicode 图标正确显示。
-    (cfs-set-spacemacs-fallback-fonts)
-    (setq cfs-use-face-font-rescale t)
+    (cnfonts-set-spacemacs-fallback-fonts)
+    (setq cnfonts-use-face-font-rescale t)
     
     (set-fontset-font "fontset-default" 'unicode "WenQuanYi Bitmap Song 12") ;;for linux
 
@@ -517,9 +517,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   (setq-default org-download-image-dir "~/Pictures/org-download/")
 
-  (setq python-shell-extra-pythonpaths
-    (quote
-     ("/home/ziyuan/Program/PhdWork/" "/home/ziyuan/Program/PhdWork/antenna1/")))
+  ;; (setq python-shell-extra-pythonpaths
+  ;;   (quote
+  ;;    ("/home/ziyuan/Program/PhdWork/" "/home/ziyuan/Program/PhdWork/antenna1/")))
 
   (setq-default evil-escape-key-sequence "fd")
  ;;(define-key evil-insert-state-map (kbd "jj") 'evil-force-normal-state)

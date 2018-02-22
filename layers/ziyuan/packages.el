@@ -95,33 +95,33 @@ Each entry is either:
 ;;     )
 
 
-(defun ziyuan/init-blog-admin()
-  (use-package blog-admin
-    :defer t
-    :commands blog-admin-start
-    :init
-    (progn
-      ;; do your configuration here
-      (setq blog-admin-backend-path "~/Program/Hexo")
-      (setq blog-admin-backend-type 'hexo)
-      (setq blog-admin-backend-new-post-in-drafts t) ;; create new post in drafts by default
-      (setq blog-admin-backend-new-post-with-same-name-dir t) ;; create same-name directory with new post
-      (setq blog-admin-backend-hexo-config-file "~/Program/Hexo/themes/next/_config.yml") ;; default assumes _config.yml
-      ))
-   )
+;; (defun ziyuan/init-blog-admin()
+;;   (use-package blog-admin
+;;     :defer t
+;;     :commands blog-admin-start
+;;     :init
+;;     (progn
+;;       ;; do your configuration here
+;;       (setq blog-admin-backend-path "~/Program/Hexo")
+;;       (setq blog-admin-backend-type 'hexo)
+;;       (setq blog-admin-backend-new-post-in-drafts t) ;; create new post in drafts by default
+;;       (setq blog-admin-backend-new-post-with-same-name-dir t) ;; create same-name directory with new post
+;;       (setq blog-admin-backend-hexo-config-file "~/Program/Hexo/themes/next/_config.yml") ;; default assumes _config.yml
+;;       ))
+;;    )
 
-(defun ziyuan/post-init-blog-admin()
-  (require 'blog-admin)
+;; (defun ziyuan/post-init-blog-admin()
+;;   (require 'blog-admin)
 
-  (setq blog-admin-backend-path "~/Program/Hexo/source/_posts")
-  (setq blog-admin-backend-type 'hexo)
-  (setq blog-admin-backend-new-post-in-drafts t) ;; create new post in drafts by default
-  (setq blog-admin-backend-new-post-with-same-name-dir t) ;; create same-name directory with new post
-  (setq blog-admin-backend-hexo-config-file "~/Program/Hexo/_config.yml") ;; default assumes _config.yml
+;;   (setq blog-admin-backend-path "~/Program/Hexo/source/_posts")
+;;   (setq blog-admin-backend-type 'hexo)
+;;   (setq blog-admin-backend-new-post-in-drafts t) ;; create new post in drafts by default
+;;   (setq blog-admin-backend-new-post-with-same-name-dir t) ;; create same-name directory with new post
+;;   (setq blog-admin-backend-hexo-config-file "~/Program/Hexo/_config.yml") ;; default assumes _config.yml
   
-  (add-hook 'blog-admin-backend-after-new-post-hook 'find-file)
+;;   (add-hook 'blog-admin-backend-after-new-post-hook 'find-file)
 
-  )
+;;   )
 
 (defun ziyuan/post-init-csharp-mode()
   (require 'cl)
@@ -142,7 +142,7 @@ Each entry is either:
 
 
     (setq org-hide-emphasis-markers t)  ;;隐藏字体样式标志
-    (setq org-agenda-files '("~/Nutstore/gtd/mygtd.org" "~/Nutstore/gtd/yjy.org" "~/Nutstore/gtd/notes.org" "~/Nutstore/gtd/mobile.org" ))  ;; 设置默认 Org Agenda 文件目录
+    ;; (setq org-agenda-files '("~/Nutstore/gtd/mygtd.org" "~/Nutstore/gtd/yjy.org" "~/Nutstore/gtd/notes.org" "~/Nutstore/gtd/mobile.org" ))  ;; 设置默认 Org Agenda 文件目录
     (setq org-use-sub-superscripts nil)  ;;上下标默认不作用，需要时加{}
     (setq org-confirm-babel-evaluate nil) ;;在用C-c C-c执行代码块时,不再提示“Do you want to execute”
     (setq org-src-fontify-natively t) ;; Org-mode 文本内语法高亮
@@ -180,29 +180,29 @@ Each entry is either:
 
 
 
-   (setq org-capture-templates
-            '(("t" "Todo" entry (file+headline "~/Nutstore/gtd/mygtd.org" "Tasks")
-               "* TODO [#B] %?\n  %i\n"
-               :empty-lines 1)
-              ("n" "notes" entry (file+headline "~/Nutstore/gtd/notes.org" "Quick notes")
-               "* %?\n  %i\n %U"
-               :empty-lines 1)
-              ("y" "YJY related" entry (file+headline "~/Nutstore/gtd/yjy.org" "YJY")
-               "* TODO [#B] %?\n  %i\n %U"
-               :empty-lines 1)
-              ("b" "Blog Ideas" entry (file+headline "~/Nutstore/gtd/notes.org" "Blog Ideas")
-               "* TODO [#B] %?\n  %i\n %U"
-               :empty-lines 1)
-              ("s" "Code Snippet" entry
-               (file "~/Nutstore/gtd/snippets.org")
-               "* %?\t%^g\n#+BEGIN_SRC %^{language}\n\n#+END_SRC")
-              ("l" "links" entry (file+headline "~/org-notes/notes.org" "Quick notes")
-               "* TODO [#C] %?\n  %i\n %a \n %U"
-               :empty-lines 1)
-              ("j" "Journal Entry"
-               entry (file+headline "~/Nutstore/gtd/notes.org" "Journal .etc")
-               "* TODO [#C] %?\n  %i\n %a \n %U"
-               :empty-lines 1)))
+   ;; (setq org-capture-templates
+   ;;          '(("t" "Todo" entry (file+headline "~/Nutstore/gtd/mygtd.org" "Tasks")
+   ;;             "* TODO [#B] %?\n  %i\n"
+   ;;             :empty-lines 1)
+   ;;            ("n" "notes" entry (file+headline "~/Nutstore/gtd/notes.org" "Quick notes")
+   ;;             "* %?\n  %i\n %U"
+   ;;             :empty-lines 1)
+   ;;            ("y" "YJY related" entry (file+headline "~/Nutstore/gtd/yjy.org" "YJY")
+   ;;             "* TODO [#B] %?\n  %i\n %U"
+   ;;             :empty-lines 1)
+   ;;            ("b" "Blog Ideas" entry (file+headline "~/Nutstore/gtd/notes.org" "Blog Ideas")
+   ;;             "* TODO [#B] %?\n  %i\n %U"
+   ;;             :empty-lines 1)
+   ;;            ("s" "Code Snippet" entry
+   ;;             (file "~/Nutstore/gtd/snippets.org")
+   ;;             "* %?\t%^g\n#+BEGIN_SRC %^{language}\n\n#+END_SRC")
+   ;;            ("l" "links" entry (file+headline "~/org-notes/notes.org" "Quick notes")
+   ;;             "* TODO [#C] %?\n  %i\n %a \n %U"
+   ;;             :empty-lines 1)
+   ;;            ("j" "Journal Entry"
+   ;;             entry (file+headline "~/Nutstore/gtd/notes.org" "Journal .etc")
+   ;;             "* TODO [#C] %?\n  %i\n %a \n %U"
+   ;;             :empty-lines 1)))
 
    (setq org-agenda-custom-commands
          '(
@@ -279,7 +279,7 @@ Each entry is either:
 
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '((sh . t)
+   '((shell . t)
      (dot . t)
      (latex .t)
      (asymptote .t)
@@ -319,13 +319,13 @@ Each entry is either:
 )
 
 
-(defun ziyuan/post-init-org-ref()
-  (setq reftex-default-bibliography '("~/References/bibliography/refs.bib"))
-  ;; see org-ref for use of these variables
-  (setq org-ref-bibliography-notes "~/References/bibliography/notes.org"
-        org-ref-default-bibliography '("~/References/bibliography/refs.bib")
-        org-ref-pdf-directory "~/References/bibliography/bibtex-pdfs/")
-  )
+;; (defun ziyuan/post-init-org-ref()
+;;   (setq reftex-default-bibliography '("~/References/bibliography/refs.bib"))
+;;   ;; see org-ref for use of these variables
+;;   (setq org-ref-bibliography-notes "~/References/bibliography/notes.org"
+;;         org-ref-default-bibliography '("~/References/bibliography/refs.bib")
+;;         org-ref-pdf-directory "~/References/bibliography/bibtex-pdfs/")
+;;   )
 
 (defun ziyuan/post-init-company()
     (setq global-company-mode 1) ; 开启全局 Company 补全
