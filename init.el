@@ -18,7 +18,7 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(nginx
-     sql
+     ;;sql
      javascript
      yaml
      html
@@ -40,6 +40,8 @@ values."
      git
      markdown
      org
+     ox-hugo
+     easy-hugo
      pandoc
      semantic
      cscope
@@ -74,6 +76,8 @@ values."
                                       evil-find-char-pinyin
                                       sr-speedbar
                                       function-args
+                                      ox-hugo
+                                      easy-hugo
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(pangu-spacing
@@ -131,10 +135,10 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(leuven
+   dotspacemacs-themes '(monokai
+                         leuven
                          solarized-dark
                          solarized-light
-                         monokai
                          spacemacs-dark
                          spacemacs-light
                          zenburn)
@@ -282,11 +286,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
 
   (setq configuration-layer--elpa-archives
-        '(("melpa-cn" . "http://elpa.zilongshanren.com/melpa/")
-          ("org-cn"   . "http://elpa.zilongshanren.com/org/")
-          ("gnu-cn"   . "http://elpa.zilongshanren.com/gnu/")
-          ("elpy" . "https://jorgenschaefer.github.io/packages/")
-          ))
+        '(("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
+          ("org-cn"   . "http://elpa.emacs-china.org/org/")
+          ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/")))
 
   (setq tramp-ssh-controlmaster-options
         "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no")
@@ -323,6 +325,12 @@ before packages are loaded. If you are unsure, you should try in setting them in
     ;; (setq highlight-thing-case-sensitive-p t)   
 
     ;; (helm-purpose-setup)
+    
+
+    
+    (use-package ox-hugo
+      :ensure t          ;Auto-install the package from Melpa (optional)
+      :after ox)
 
     (add-to-list 'load-path "/usr/local/share/asymptote")
     (autoload 'asy-mode "asy-mode.el" "Asymptote major mode." t)
@@ -429,7 +437,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (spacemacs|define-text-object "l" "black-lenticular-brackets" "【" "】");; csb(中文括号的快速替换
     (spacemacs|define-text-object "g" "double-guillemet" "《" "》");; csb(中文括号的快速替换
     (spacemacs|define-text-object "G" "single-guillemet" "<" ">");; csb(中文括号的快速替换
-    (setq-default evil-surround-pairs-alist evil-surround-pairs-alist)
+    ;;(setq-default evil-surround-pairs-alist evil-surround-pairs-alist)
 
     ;;模拟vim的n zz功能('*'高亮某个词后，'n'向下时高亮词移动到屏中部，'zz'也可单独使用 )
     (defadvice evil-search-next (after advice-for-evil-search-next activate)
@@ -488,7 +496,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
        (add-to-list 'exec-path my-path))
 
     (setq-default dotspacemacs-themes '(monokai solarized-dark leuven)) 
-  (linum-relative-global-mode t)
+  ;(linum-relative-global-mode t)
   (setcdr evil-insert-state-map nil)
   (define-key evil-insert-state-map [escape] 'evil-normal-state)
   (setq ns-use-srgb-colorspace nil)
@@ -525,8 +533,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
  ;;(define-key evil-insert-state-map (kbd "jj") 'evil-force-normal-state)
 
   ;;如果后面紧跟着字符就不补后号
-  (sp-pair "(" nil :unless '(sp-point-before-word-p))
-  (sp-pair "{" nil :unless '(sp-point-before-word-p))
+  ;(sp-pair "(" nil :unless '(sp-point-before-word-p))
+  ;(sp-pair "{" nil :unless '(sp-point-before-word-p))
 
 
 

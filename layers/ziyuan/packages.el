@@ -45,6 +45,8 @@
   ;;  anaconda-mode
     ;; (org-download :location (recipe :fetcher github :repo "abo-abo/org-download"))
     (org :location built-in)
+
+    ;; ox-hugo
     )
   "The list of Lisp packages required by the ziyuan layer.
 
@@ -348,4 +350,11 @@ Each entry is either:
                                           "⑮" "⑯" "⑰"
                                           "⑱" "⑲" "⑳"))
   )
+
+;; (defun ziyuan/ox-hugo-init()
+;; ;; ox-hugo config
+;;  (use-package ox-hugo
+;; :ensure t          ;Auto-install the package from Melpa (optional)
+;; :after ox))
+
 
