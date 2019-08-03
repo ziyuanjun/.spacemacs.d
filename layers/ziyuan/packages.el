@@ -350,11 +350,3 @@ Each entry is either:
                                           "⑮" "⑯" "⑰"
                                           "⑱" "⑲" "⑳"))
   )
-
-;; (defun ziyuan/ox-hugo-init()
-;; ;; ox-hugo config
-;;  (use-package ox-hugo
-;; :ensure t          ;Auto-install the package from Melpa (optional)
-;; :after ox))
-
-

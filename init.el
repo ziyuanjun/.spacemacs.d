@@ -17,7 +17,8 @@ values."
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
-   '(nginx
+   '(rust
+     nginx
      ;;sql
      javascript
      yaml
@@ -40,7 +41,7 @@ values."
      git
      markdown
      org
-     ox-hugo
+     ;;ox-hugo
      easy-hugo
      pandoc
      semantic
@@ -76,8 +77,8 @@ values."
                                       evil-find-char-pinyin
                                       sr-speedbar
                                       function-args
-                                      ox-hugo
-                                      easy-hugo
+                                      ;;ox-hugo
+                                      ;;easy-hugo
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(pangu-spacing
@@ -285,7 +286,7 @@ executes.
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
 
-  (setq configuration-layer--elpa-archives
+  (setq configuration-layer-elpa-archives
         '(("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
           ("org-cn"   . "http://elpa.emacs-china.org/org/")
           ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/")))
@@ -332,6 +333,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
       :ensure t          ;Auto-install the package from Melpa (optional)
       :after ox)
 
+
     (add-to-list 'load-path "/usr/local/share/asymptote")
     (autoload 'asy-mode "asy-mode.el" "Asymptote major mode." t)
     (autoload 'lasy-mode "asy-mode.el" "hybrid Asymptote/Latex major mode." t)
@@ -348,8 +350,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
       (remove-hook 'yas-after-exit-snippet-hook 'foo))
 
 
-    (setq yas-snippet-dirs (append '("/home/zy/.spacemacs.d/snippets") yas-snippet-dirs))
-    (setq-default yas--default-user-snippets-dir "/home/zy/.spacemacs.d/snippets")
+    (setq yas-snippet-dirs (append '("/home/ziyuan/.spacemacs.d/snippets") yas-snippet-dirs))
+    (setq-default yas--default-user-snippets-dir "/home/ziyuan/.spacemacs.d/snippets")
 
     (require 'yasnippet)
     (yas-global-mode 1)
@@ -425,6 +427,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
           ;;恢复光标位置
           (goto-char (- (point-max) pointleft-at-insert))))
       (global-set-key (kbd "M-j") 'ziyuan/pyim-convert-code-at-point);与 pyim-probe-dynamic-english 配合
+      (global-set-key (kbd "M-h") 'pyim-convert-code-at-point);与 pyim-probe-dynamic-english 配合
 
 
       (global-set-key (kbd "C-s") 'helm-swoop)
@@ -537,39 +540,51 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;(sp-pair "{" nil :unless '(sp-point-before-word-p))
 
 
+  (add-to-list 'load-path (expand-file-name "~/.emacs.d/elpa/awesome-tab/"))
+  (require 'awesome-tab)
+  (awesome-tab-mode t)
 
-;; 定义 org-mode-reftex-search
-(defun org-mode-reftex-search ()
- ;; jump to the notes for the paper pointed to at from reftex search
- (interactive)
- (org-open-link-from-string (format "[[notes:%s]]" (reftex-citation t))))
+ (require 'org-ref)
 
-(setq org-link-abbrev-alist
- '(("bib" . "~/References/ref.bib::%s")
-   ("notes" . "~/References/org/notes.org::#%s")
-   ("papers" . "~/References/papers/%s.pdf")))
+ (setq reftex-default-bibliography '("~/References/ref.bib"))
+
+ ;; see org-ref for use of these variables
+ (setq org-ref-bibliography-notes "~/References/notes.org"
+       org-ref-default-bibliography '("~/References/ref.bib")
+       org-ref-pdf-directory "~/References/pdfs/")
+
+;; ;; 定义 org-mode-reftex-search
+;; (defun org-mode-reftex-search ()
+;;  ;; jump to the notes for the paper pointed to at from reftex search
+;;  (interactive)
+;;  (org-open-link-from-string (format "[[notes:%s]]" (reftex-citation t))))
+
+;; (setq org-link-abbrev-alist
+;;  '(("bib" . "~/References/ref.bib::%s")
+;;    ("notes" . "~/References/org/notes.org::#%s")
+;;    ("papers" . "~/References/papers/%s.pdf")))
    
-;; 当使用 org-mode 时，自动调 RefTeX
-(defun org-mode-reftex-setup ()
-  (load-library "reftex")
-  (and (buffer-file-name) (file-exists-p (buffer-file-name))
-       (progn
-    ;; enable auto-revert-mode to update reftex when bibtex file changes on disk
-    (global-auto-revert-mode t)
-    (reftex-parse-all)
-    ;; add a custom reftex cite format to insert links
-    (reftex-set-cite-format
-      '((?b . "[[bib:%l][%l-bib]]")
-        (?c . "\\cite{%l}")
-        (?n . "[[notes:%l][%l-notes]]")
-        (?p . "[[papers:%l][%l-paper]]")
-        (?t . "%t")
-        (?h . "** %t\n:PROPERTIES:\n:Custom_ID: %l\n:END:\n[[papers:%l][%l-paper]]")))))
-  (define-key org-mode-map (kbd "C-c )") 'reftex-citation)
-  ;; binding of  ”C-c (” to org-mode-reftex-search
-  (define-key org-mode-map (kbd "C-c (") 'org-mode-reftex-search))
+;; ;; 当使用 org-mode 时，自动调 RefTeX
+;; (defun org-mode-reftex-setup ()
+;;   (load-library "reftex")
+;;   (and (buffer-file-name) (file-exists-p (buffer-file-name))
+;;        (progn
+;;     ;; enable auto-revert-mode to update reftex when bibtex file changes on disk
+;;     (global-auto-revert-mode t)
+;;     (reftex-parse-all)
+;;     ;; add a custom reftex cite format to insert links
+;;     (reftex-set-cite-format
+;;       '((?b . "[[bib:%l][%l-bib]]")
+;;         (?c . "\\cite{%l}")
+;;         (?n . "[[notes:%l][%l-notes]]")
+;;         (?p . "[[papers:%l][%l-paper]]")
+;;         (?t . "%t")
+;;         (?h . "** %t\n:PROPERTIES:\n:Custom_ID: %l\n:END:\n[[papers:%l][%l-paper]]")))))
+;;   (define-key org-mode-map (kbd "C-c )") 'reftex-citation)
+;;   ;; binding of  ”C-c (” to org-mode-reftex-search
+;;   (define-key org-mode-map (kbd "C-c (") 'org-mode-reftex-search))
 
-(add-hook 'org-mode-hook 'org-mode-reftex-setup)
+;; (add-hook 'org-mode-hook 'org-mode-reftex-setup)
 
 (fa-config-default)
 (setq
@@ -596,6 +611,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
 (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
 (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)
 
+
+(require 'org-tempo) ;;< s TAB creates a code block. Enable it.
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
